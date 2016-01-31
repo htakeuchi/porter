@@ -1,0 +1,31 @@
+{
+  "name": "Porter for WorkFlowy",
+  "version": "1.0",
+  "description": "Export WorkFlowy outline to Markdown and HTML.",
+  "icons" : {
+    "16": "image/icon16.png",
+    "48": "image/icon48.png",
+    "128": "image/icon128.png"
+   },
+
+  "background": { 
+    "scripts": ["js/background.js"]
+  },
+
+  "content_scripts": [ {
+    "matches": ["https://workflowy.com/*"], "js": ["js/content_script.js"]
+    }
+  ],
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "page_action": {
+    "default_name": "Porter for WorkFlowy",
+    "default_popup": "popup.html"
+  },
+
+  "manifest_version": 2
+}
+

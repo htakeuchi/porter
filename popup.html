@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Porter for WorkFlowy</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="panel panel-info" style="width:500px; margin-bottom:0;">
+      <div class="panel-heading">
+        <h3 class="panel-title">Porter for WorkFlowy</h3>
+      </div>
+
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <textarea class="form-control" id="textArea" rows="10">
+            </textarea>
+          </div>
+
+          <div class="panel panel-default">
+            <span class="label label-info font-size-base">Mode</span>
+            <div class="panel-body" style="margin:0; padding:0.5em;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="radio-inline">
+                  <input type="radio" name="typeOptions" id="heading" value="heading" checked> Heading
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="typeOptions" id="bulleted" value="bulleted"> Bulleted
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="typeOptions" id="numbered" value="numbered"> Numbers
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="panel panel-default">
+            <span class="label label-info">Format</span>
+            <div class="panel-body" style="margin:0; padding:0.5em;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="radio-inline">
+                  <input checked type="radio" name="formatOptions" id="markDown" value="markdown" checked> Markdown
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="formatOptions" id="html" value="html"> HTML
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button id="close" type="submit" class="btn btn-default center-block">CLOSE</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/marked.min.js"></script>
+    <script type="text/javascript" src="js/popup.js" async=""></script>
+
+  </body>
+</html>
