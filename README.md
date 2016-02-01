@@ -10,10 +10,11 @@ Grab it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/po
 
 Usage
 -----
-1. Zoom to the top node on [WorkFlowy](http://workflowy.com/) you want to export.
-2. Click a "Porter for WorkFlowy" icon in the address bar.
-3. The popup window will be opened, choose your favorite exporting options.
-4. Outline data of converted the WorkFlowy will be copied to the clipboard. 
+1. Visit [WorkFlowy](http://workflowy.com/) site in Google Chrome.
+2. Zoom-in to the top node on you want to export.
+3. Click a "Porter for WorkFlowy" icon in the address bar.
+4. The popup window will be opened, choose your favorite exporting options.
+5. Outline data of converted the WorkFlowy will be copied to the clipboard. 
 
 Install Development Version
 ---------------------------

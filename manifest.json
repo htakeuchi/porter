@@ -1,6 +1,6 @@
 {
   "name": "Porter for WorkFlowy",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Export WorkFlowy outline to Markdown and HTML.",
   "icons" : {
     "16": "image/icon16.png",

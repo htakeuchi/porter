@@ -26,8 +26,13 @@
     changeFormat(current_format);
   };
 
-  function hasChild(i) {
-    return (i+1 < nodes.length) && (nodes[i+1].type != "eoc") && (nodes[i].type != "eoc");
+  function hasChild(pos) {
+    if (nodes[pos].type != "node") return false;
+    for (var i = pos + 1; i < nodes.length; i++) {
+      if (nodes[i].type == "eoc") return false;
+      if (nodes[i].type == "node") return true;
+    }; 
+    return false;
   };
 
   function toMarkdown() {
@@ -53,7 +58,7 @@
       // Heading
       if (hasChild(i)) { 
         level = level + 1;
-        text = text + new Array(level).join('#') + " " + nodes[i].title; 
+        text =  text + "\n" + new Array(level).join('#') + " " + nodes[i].title; 
       } else if (nodes[i].type == "eoc") {
         if (previous == "eoc") {
           level = level -1;
@@ -61,7 +66,8 @@
         previous = nodes[i].type;
         continue;
       } else {
-        text = text.concat(nodes[i].title + "\n");    
+        text = text.concat(nodes[i].title);
+        if (nodes[i].type == "note") text = text + "\n";
       };
       text = text.concat("\n");
       previous = nodes[i].type;
