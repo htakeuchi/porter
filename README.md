@@ -30,3 +30,12 @@ License
 Copyright (c) 2016, TAKEUCHI, Hitoshi. (MIT License)
 
 See LICENSE for more info.
+
+Release Notes
+--------
+
+### 1.1 - 01 Feb 2016
+- Notes support
+
+### 1.0 - 31 Jan 2016
+- This is a first public release

@@ -66,8 +66,7 @@
         previous = nodes[i].type;
         continue;
       } else {
-        text = text.concat(nodes[i].title);
-        if (nodes[i].type == "note") text = text + "\n";
+        text = text.concat(nodes[i].title) + "\n";
       };
       text = text.concat("\n");
       previous = nodes[i].type;
