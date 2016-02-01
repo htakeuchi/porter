@@ -75,7 +75,7 @@
   }
 
   function toBullets(type) {
-    var text = nodes[0].title + "\n";  
+    var text = nodes[0].title + "\n\n";  
     var previous = null;
     var level = 1;
     
@@ -85,12 +85,14 @@
           level = level + 1;
         };
         text = text + new Array(level).join('\t') + type + " " + nodes[i].title + "\n";       
+      } else if (nodes[i].type == "note") {
+        text = text + nodes[i].title + "\n\n";       
       } else {
         if (previous != "node") {
           level = level - 1;
         };
       };
-      previous = nodes[i].type;
+      if (nodes[i].type != 'note') previous = nodes[i].type;
     }
     return text;
   };
