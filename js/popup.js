@@ -55,8 +55,8 @@
     var level = 2;
     
     for (var i = 1; i < nodes.length; i++) {
-      // Heading
       if (hasChild(i)) { 
+        // Heading
         level = level + 1;
         text =  text + "\n" + new Array(level).join('#') + " " + nodes[i].title; 
       } else if (nodes[i].type == "eoc") {
@@ -66,7 +66,8 @@
         previous = nodes[i].type;
         continue;
       } else {
-        text = text.concat(nodes[i].title) + "\n";
+        // paragraph
+        text = text.concat(nodes[i].title);
       };
       text = text.concat("\n");
       previous = nodes[i].type;
@@ -86,7 +87,7 @@
         };
         text = text + new Array(level).join('\t') + type + " " + nodes[i].title + "\n";       
       } else if (nodes[i].type == "note") {
-        text = text + nodes[i].title + "\n\n";       
+        text = text + nodes[i].title + "\n";       
       } else {
         if (previous != "node") {
           level = level - 1;
