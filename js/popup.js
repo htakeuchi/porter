@@ -2,7 +2,14 @@
   var nodes = null;
   var current_format = 'markdown';
   var current_mode = 'heading';
+  var output_notes = false;
 
+  // change option
+  function changeOption(type) {
+    output_notes = document.getElementById("outputNotes").checked;
+    changeFormat(current_format);    
+  };
+  
   // change export Mode
   function changeFormat(type) {
     var text;
@@ -66,8 +73,13 @@
         previous = nodes[i].type;
         continue;
       } else {
-        // paragraph
-        text = text.concat(nodes[i].title);
+        // node or notes
+        if (nodes[i].type == "node" || output_notes) {
+          text = text.concat(nodes[i].title);
+        } else {
+          previous = nodes[i].type;
+          continue;
+        };
       };
       text = text.concat("\n");
       previous = nodes[i].type;
@@ -86,7 +98,7 @@
           level = level + 1;
         };
         text = text + new Array(level).join('\t') + type + " " + nodes[i].title + "\n";       
-      } else if (nodes[i].type == "note") {
+      } else if (nodes[i].type == "note" && output_notes) {
         text = text + nodes[i].title + "\n";       
       } else {
         if (previous != "node") {
@@ -136,6 +148,8 @@
     document.getElementById("heading").addEventListener("click",  function() { changeMode('heading'); }, false);
     document.getElementById("bulleted").addEventListener("click",  function() { changeMode('bulleted'); }, false);
     document.getElementById("numbered").addEventListener("click",  function() { changeMode('numbered'); }, false);
+
+    document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);
 
     setTimeout(function() {textarea_select();}, 0);
   };
