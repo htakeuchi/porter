@@ -7,13 +7,13 @@
   // change option
   function changeOption(type) {
     output_notes = document.getElementById("outputNotes").checked;
-    changeFormat(current_format);    
+    changeFormat(current_format);
   };
-  
+
   // change export Mode
   function changeFormat(type) {
     var text;
- 
+
     current_format = type;
     switch (type) {
       case "markdown":
@@ -22,7 +22,7 @@
       case "html":
         text = toHtml();
         break;
-    };  
+    };
     document.getElementById('textArea').innerText = text;
     textarea_select();
   };
@@ -38,7 +38,7 @@
     for (var i = pos + 1; i < nodes.length; i++) {
       if (nodes[i].type == "eoc") return false;
       if (nodes[i].type == "node") return true;
-    }; 
+    };
     return false;
   };
 
@@ -57,15 +57,15 @@
   };
 
   function toHeading() {
-    var text = "# " + nodes[0].title + "\n";  
+    var text = "# " + nodes[0].title + "\n";
     var previous = null;
     var level = 2;
-    
+
     for (var i = 1; i < nodes.length; i++) {
-      if (hasChild(i)) { 
+      if (hasChild(i)) {
         // Heading
         level = level + 1;
-        text =  text + "\n" + new Array(level).join('#') + " " + nodes[i].title; 
+        text =  text + "\n" + new Array(level).join('#') + " " + nodes[i].title;
       } else if (nodes[i].type == "eoc") {
         if (previous == "eoc") {
           level = level -1;
@@ -88,18 +88,18 @@
   }
 
   function toBullets(type) {
-    var text = nodes[0].title + "\n\n";  
+    var text = nodes[0].title + "\n\n";
     var previous = null;
     var level = 1;
-    
+
     for (var i = 1; i < nodes.length; i++) {
       if (nodes[i].type == "node") {
         if (previous == "node") {
           level = level + 1;
         };
-        text = text + new Array(level).join('\t') + type + " " + nodes[i].title + "\n";       
+        text = text + new Array(level).join('\t') + type + " " + nodes[i].title + "\n";
       } else if (nodes[i].type == "note" && output_notes) {
-        text = text + nodes[i].title + "\n";       
+        text = text + nodes[i].title + "\n";
       } else {
         if (previous != "node") {
           level = level - 1;
@@ -139,27 +139,22 @@
     document.getElementById("heading").addEventListener("click",  function() { changeMode('heading'); }, false);
     document.getElementById("bulleted").addEventListener("click",  function() { changeMode('bulleted'); }, false);
     document.getElementById("numbered").addEventListener("click",  function() { changeMode('numbered'); }, false);
-    document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);    
-  } 
-
+    document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);
+  }
 
   function main() {
     var port = chrome.extension.connect({ name: "Background" });
-    port.onMessage.addListener(function(content) {
-      nodes = content.content;
+    port.onMessage.addListener(function(response) {
+      nodes = response.content;
+      document.getElementById("popupTitle").innerHTML = response.title + ' - ' + response.url;
+
       changeFormat('markdown');
     });
-    port.postMessage({action: "getContents"});
 
-    setEventListers(); 
-
-    chrome.tabs.getCurrent(function (tab) {
-console.log(tab);
-//      document.getElementById("popupTitle").innerHTML = tab.url;
-    });
-
+    port.postMessage();
+    setEventListers();
     setTimeout(function() {textarea_select();}, 0);
   };
-  
+
   window.onload = main;
 }());
