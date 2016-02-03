@@ -132,6 +132,17 @@
     document.execCommand("copy");
   };
 
+  function setEventListers(){
+    document.getElementById("close").addEventListener("click",  function() { window.close(); }, false);
+    document.getElementById("markDown").addEventListener("click",  function() { changeFormat('markdown'); }, false);
+    document.getElementById("html").addEventListener("click",  function() { changeFormat('html'); }, false);
+    document.getElementById("heading").addEventListener("click",  function() { changeMode('heading'); }, false);
+    document.getElementById("bulleted").addEventListener("click",  function() { changeMode('bulleted'); }, false);
+    document.getElementById("numbered").addEventListener("click",  function() { changeMode('numbered'); }, false);
+    document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);    
+  } 
+
+
   function main() {
     var port = chrome.extension.connect({ name: "Background" });
     port.onMessage.addListener(function(content) {
@@ -139,17 +150,13 @@
       changeFormat('markdown');
     });
     port.postMessage({action: "getContents"});
- 
-    document.getElementById("close").addEventListener("click",  function() { window.close(); }, false);
 
-    document.getElementById("markDown").addEventListener("click",  function() { changeFormat('markdown'); }, false);
-    document.getElementById("html").addEventListener("click",  function() { changeFormat('html'); }, false);
+    setEventListers(); 
 
-    document.getElementById("heading").addEventListener("click",  function() { changeMode('heading'); }, false);
-    document.getElementById("bulleted").addEventListener("click",  function() { changeMode('bulleted'); }, false);
-    document.getElementById("numbered").addEventListener("click",  function() { changeMode('numbered'); }, false);
-
-    document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);
+    chrome.tabs.getCurrent(function (tab) {
+console.log(tab);
+//      document.getElementById("popupTitle").innerHTML = tab.url;
+    });
 
     setTimeout(function() {textarea_select();}, 0);
   };
