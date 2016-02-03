@@ -18,13 +18,16 @@
   ],
 
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
 
   "page_action": {
     "default_name": "Porter for WorkFlowy",
     "default_popup": "popup.html"
   },
+
+  "options_page": "options.html",
 
   "manifest_version": 2
 }
