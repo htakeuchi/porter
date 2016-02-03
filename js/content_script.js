@@ -32,7 +32,7 @@
       document.head.appendChild(style);
     }    
   }
-  
+
 // TODO: 一括してロードする
   function injectCSS() {
     chrome.storage.sync.get("theme_enable", function(storage) {
@@ -43,8 +43,12 @@
               setCSS(storage.custom_css);
             });
           } else {
-            chrome.storage.sync.get("theme_css", function(storage) {
-              setCSS(storage.theme_css);
+            chrome.storage.sync.get("theme", function(storage) {
+              var link = document.createElement("link");
+              link.href = chrome.extension.getURL("css/theme/"+storage.theme+".css");
+              link.type = "text/css";
+              link.rel = "stylesheet";
+              document.getElementsByTagName("head")[0].appendChild(link);
             });            
           };
         });

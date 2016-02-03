@@ -29,6 +29,10 @@
 
   "options_page": "options.html",
 
+  "web_accessible_resources": [
+    "css/theme/*"
+    ],
+   
   "manifest_version": 2
 }
 
