@@ -21,16 +21,25 @@
       <div class="panel panel-default">
 
         <div class="panel-heading">
-          <h3 class="panel-title">Custom CSS</h3>
+          <h3 class="panel-title">Theme</h3>
         </div>
         <div class="panel-body">
           <form>
-            <div class="form-group" style="border: 1px solid #ccc">
+            <div class="form-group">
+              <input type="checkbox" id="themeEnable"> Theme Enable
+            </div>
+
+            <div class="form-group">
+              <label for="themeSelect">Theme</label>
+              <select class="form-control" id="themeSelect" disabled></select>
+            </div>
+
+            <div class="form-group" id="editorArea" style="border: 1px solid #ccc; display: none;">
               <textarea class="form-control" id="textArea" rows="10"></textarea>
             </div>
 
             <div class="form-group">
-              <button id="save"  type="button" class="btn btn-primary center-block" data-toggle="modal" data-target="#myModal">save</button>
+              <button id="save"  type="button" class="btn btn-primary center-block" data-toggle="modal" data-target="#myModal">APPLY</button>
             </div>
           </form>
         </div>
@@ -49,7 +58,7 @@
             Options saved.
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">CLOSE</button>
           </div>
         </div>
       </div>
