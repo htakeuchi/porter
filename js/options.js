@@ -1,6 +1,7 @@
 (function() {
   var editor;
   var current_theme;
+  var theme_css;
 
   var themes = [
     {'label': 'Work a Simpler Flowy v2.0', 
@@ -40,10 +41,12 @@
     chrome.storage.sync.set({
       'custom_css': editor.getValue(),
       'theme': current_theme,
-      'theme_enable': document.getElementById('themeEnable').checked 
+      'theme_css': theme_css,
+      'theme_enable': document.getElementById('themeEnable').checked,
     });    
   };
   
+  // TODO: 一括してロードする
   function load() {
     chrome.storage.sync.get("theme_enable", function(storage) {
       document.getElementById('themeEnable').checked = storage.theme_enable;
@@ -54,6 +57,10 @@
       current_theme = storage.theme;
       setThemeList();
       change_theme();
+    });
+
+    chrome.storage.sync.get("theme_css", function(storage) {
+      theme_css = storage.theme_css;
     });
 
     chrome.storage.sync.get("custom_css", function(storage) {
@@ -89,6 +96,7 @@
       e.style.display = 'block';
       editor.refresh();
     } else {
+      theme_css = 
       e.style.display = 'none';
     }  
   }

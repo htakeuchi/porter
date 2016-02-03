@@ -25,12 +25,29 @@
     return list;
   }
 
+  function setCSS(css) {
+    if (document.head) {
+      var style = document.createElement("style");
+      style.innerHTML = css;
+      document.head.appendChild(style);
+    }    
+  }
+  
+// TODO: 一括してロードする
   function injectCSS() {
-    chrome.storage.sync.get("css", function(css) {
-      if (document.head) {
-        var style = document.createElement("style");
-        style.innerHTML = css.css;
-        document.head.appendChild(style);
+    chrome.storage.sync.get("theme_enable", function(storage) {
+      if (storage.theme_enable) {
+        chrome.storage.sync.get("theme", function(storage) {          
+          if (storage.theme == "CUSTOM") {
+            chrome.storage.sync.get("custom_css", function(storage) {
+              setCSS(storage.custom_css);
+            });
+          } else {
+            chrome.storage.sync.get("theme_css", function(storage) {
+              setCSS(storage.theme_css);
+            });            
+          };
+        });
       }
     });
   }
