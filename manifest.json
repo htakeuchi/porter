@@ -10,13 +10,16 @@
 
   "background": {
     "scripts": [
-      "js/background.js",
-      "js/wf_text_counter.js"
+      "js/background.js"
     ]
   },
 
   "content_scripts": [ {
-    "matches": ["https://workflowy.com/*"], "js": ["js/content_script.js"]
+    "matches": ["https://workflowy.com/*"],
+    "js": [
+      "js/jquery-2.2.0.min.js",
+      "js/content_script.js"
+      ]
     }
   ],
 

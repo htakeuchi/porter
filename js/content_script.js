@@ -1,4 +1,8 @@
 (function(global) {
+  var g_timerID;
+  var g_textCountFlag;
+  var g_CounterMsg = 'Click to count';
+
   function elementsToArray(node) {
     var list = [];
     var e = node.querySelectorAll('div.project div.name, div.project div.notes, div.children div.childrenEnd');
@@ -54,14 +58,54 @@
         });
       }
     });
+  };
+
+  function addTextCounter() {
+    var styles = {
+      "font-size" : "13px",
+      color : $("#helpButton").css("color"),
+      "background-image" : $("#header").css("background-image"),
+      "background-color" : $("#header").css("background-color"),
+      float : "right"
+    };
+    styles["padding"] = "8px 20px 8px 0px";
+    $('<a></a>', {id: 'textCounter'}).css(styles).appendTo($("#header"));
+    $('#textCounter').html(g_CounterMsg);
+
+    jQuery('#textCounter').click(function() {
+      if (g_textCountFlag) {
+        clearInterval(g_timerID);
+        $('#textCounter').html(g_CounterMsg);
+      } else {
+        textCounter();
+        g_timerID = setInterval(textCounter, 1000);
+      }
+      g_textCountFlag = !g_textCountFlag;
+    });
+  }
+
+  function textCounter() {
+//console.log('Timer');
+    content = elementsToArray(document.querySelector('div.selected'));
+    var chars = 0;
+    for (i=0; i < content.length; i++) {
+      if (content[i].type != 'node') continue;
+      chars = chars + content[i].title.length;
+    }
+    var html = chars + ' letters';
+    $('#textCounter').html(html);
   }
 
   function main() {
+    g_textCountFlag = false;
     // show icon in address bar
     chrome.extension.sendRequest({}, function(res) {});
 
-    // inject custom CSS Listener
-    window.onload = injectCSS;
+    $(window).load(function(){
+      injectCSS();
+      // TODO: terrible
+      setTimeout(function() {addTextCounter()}, 500);
+    });
 
     chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
       var content = elementsToArray(document.querySelector('div.selected'));
@@ -70,7 +114,5 @@
       sendResponse({content: content, url: url, title: title});
     });
   }
-
   main();
-
 })();
