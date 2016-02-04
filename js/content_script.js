@@ -63,7 +63,7 @@
   function addTextCounter() {
     var styles = {
       "font-size" : "13px",
-      color : $("#helpButton").css("color"),
+      color : '#fff',
       "background-image" : $("#header").css("background-image"),
       "background-color" : $("#header").css("background-color"),
       float : "right"
@@ -85,7 +85,6 @@
   }
 
   function textCounter() {
-//console.log('Timer');
     content = elementsToArray(document.querySelector('div.selected'));
     var chars = 0;
     for (i=0; i < content.length; i++) {
@@ -103,8 +102,7 @@
 
     $(window).load(function(){
       injectCSS();
-      // TODO: terrible
-      setTimeout(function() {addTextCounter()}, 500);
+      addTextCounter();
     });
 
     chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
