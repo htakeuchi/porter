@@ -2,7 +2,15 @@ Porter for WorkFlowy
 ============
 Chrome extension to export data from WorkFlowy.
 
-Porter for WorkFlowy extension will allow you to export data from WorkFlowy to Markdown and HTML.
+Features
+============
+The current version of Porter for WorkFlowy provides features below
+
+* Markdown/HTML Export
+	* Exports WorkFlowy outline to Markdown and HTML.
+* Built-in Themes
+	* Customize WorkFlowy visual by built-in themes. change colors, or completely redesign the Workflowy by custom CSS. 
+
 
 Install Published Version
 -------------------------
@@ -34,8 +42,11 @@ See LICENSE for more info.
 Release Notes
 --------
 
-### 1.1 - 01 Feb 2016
-- Notes support
+### 1.1 - 04 Feb 2016
+- Exports notes support
+- Built-in Theme
+- Counts the number of characters in outline on real time
+- Display page title and URL as Markdown format in Export dialog
 
 ### 1.0 - 31 Jan 2016
 - This is a first public release

@@ -142,12 +142,15 @@
     document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);
   }
 
+  function makeTitleLabel(title, url) {
+    return '[' + title + '](' + url + ')';
+  }
+
   function main() {
     var port = chrome.extension.connect({ name: "Background" });
     port.onMessage.addListener(function(response) {
       nodes = response.content;
-      document.getElementById("popupTitle").innerHTML = response.title + ' - ' + response.url;
-
+      document.getElementById("popupTitle").innerHTML = makeTitleLabel(response.title, response.url);
       changeFormat('markdown');
     });
 

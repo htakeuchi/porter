@@ -2,7 +2,8 @@
   var g_timerID;
   var g_textCountFlag;
   var g_CounterMsg = 'Click to count';
-
+  var g_sideBar;
+  
   function elementsToArray(node) {
     var list = [];
     var e = node.querySelectorAll('div.project div.name, div.project div.notes, div.children div.childrenEnd');
@@ -85,14 +86,43 @@
   }
 
   function textCounter() {
-    content = elementsToArray(document.querySelector('div.selected'));
+    var content = elementsToArray(document.querySelector('div.selected'));
     var chars = 0;
-    for (i=0; i < content.length; i++) {
+    for (var i=0; i < content.length; i++) {
       if (content[i].type != 'node') continue;
       chars = chars + content[i].title.length;
     }
     var html = chars + ' letters';
     $('#textCounter').html(html);
+  }
+
+  function addSideBar() {
+    $('body').append('\
+    <div id="dialog" title="Quick Access">\
+      <ul>\
+      <li><a href="#">Home</a></li>\
+      <li><a href="#">Home 2</a></li>\
+      <li><a href="#">Home 3</a></li>\
+      <li><a href="#">Home 4</a></li>\
+      <li><a href="#">Home 5</a></li>\
+      <li><a href="#">Home 6</a></li>\
+      <li><a href="#">Home 7</a></li>\
+      <li><a href="#">Home 8</a></li>\
+      <li><a href="#">Home 9</a></li>\
+      <li><a href="#">Home 10</a></li>\
+      </ul>\
+    </div>');
+    
+    g_sideBar = $( "#dialog" ).dialog({
+      height: 'auto',
+      width : 300,
+      position: {
+        of : window,
+        at: 'right top',
+        my: 'right top'
+      }
+    });
+    g_sideBar.parent().css({position: 'fixed'})
   }
 
   function main() {
@@ -103,6 +133,7 @@
     $(window).load(function(){
       injectCSS();
       addTextCounter();
+//      addSideBar();
     });
 
     chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {

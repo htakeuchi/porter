@@ -4,34 +4,28 @@
   var theme_css;
 
   var themes = [
-    {'label': 'Work a Simpler Flowy v2.0', 
-      'author': '', 
-      'url': 'https://userstyles.org/styles/123191/work-a-simpler-flowy-v2-0',
+    {'label': 'Work a Simpler Flowy v2.0 by 72dpi', 
       'filename': 'WorkaSimplerFlowyv2.0'
     },
-    {'label': 'workflowy.com - clean and bright',
-     'author': '',
-     'url': 'https://userstyles.org/styles/103816/workflowy-com-clean-and-bright',
+    {'label': 'workflowy.com - clean and bright by hodanli',
       'filename': 'cleanandbright'
     },
-    {'label': 'matFlow.dark - Emerald [WorkFlowy]', 
-      'author': '', 
-      'url': 'https://userstyles.org/styles/119273/matflow-dark-emerald-workflowy',
-      'filename': 'matFlow.darkEmerald'
-    },
-    {'label': 'Workflowy for Writers', 
-      'author': '', 
-      'url': 'https://userstyles.org/styles/111747/workflowy-for-writers',
+    {'label': 'Workflowy for Writers by isaribi', 
       'filename': 'workflowyforwriters'
     },     
-    {'label': 'Workflowy Monokai',
-     'author': '', 
-     'url': 'https://userstyles.org/styles/108530/workflowy-monokai',
+    {'label': 'Workflowy Monokai by F0rnit1',
       'filename': 'WorkflowyMonokai'
     },
+    {'label': 'Workflowy Itemized by Dan Fessler',
+      'filename': 'workflowy-itemized'
+    },
+    {'label': 'WorkFlowyGiffmex by giffmex',
+      'filename': 'workflowygiffmex'
+    },
+    {'label': 'Big Black Workflowy by rsynnest',
+      'filename': 'big-black-workflowy'
+    },
     {'label': 'CUSTOM',
-     'author': 'YOU', 
-     'url': 'https://workflowy.com',
       'filename': 'CUSTOM'
     }, 
   ];
