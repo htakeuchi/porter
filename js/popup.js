@@ -75,7 +75,7 @@
       } else {
         // node or notes
         if (nodes[i].type == "node" || output_notes) {
-          text = text.concat(nodes[i].title);
+          text = text.concat(nodes[i].title) + "\n";
         } else {
           previous = nodes[i].type;
           continue;
