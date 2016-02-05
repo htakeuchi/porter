@@ -1,6 +1,6 @@
 Porter for WorkFlowy
 ============
-Chrome extension to export data from WorkFlowy.
+Chrome extension to power up Workflowy.
 
 Features
 ============
