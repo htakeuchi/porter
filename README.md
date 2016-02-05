@@ -9,7 +9,9 @@ The current version of Porter for WorkFlowy provides features below
 * Markdown/HTML Export
 	* Exports WorkFlowy outline to Markdown and HTML.
 * Built-in Themes
-	* Customize WorkFlowy visual by built-in themes. change colors, or completely redesign the Workflowy by custom CSS. 
+	* Customize WorkFlowy visual by built-in themes. change colors, or completely redesign the Workflowy by custom CSS.
+* Counts the number of characters in outline on real time.
+* Display page title and URL as Markdown format in Export dialog.
 
 
 Install Published Version
@@ -22,7 +24,7 @@ Usage
 2. Zoom-in to the top node on you want to export.
 3. Click a "Porter for WorkFlowy" icon in the address bar.
 4. The popup window will be opened, choose your favorite exporting options.
-5. Outline data of converted the WorkFlowy will be copied to the clipboard. 
+5. Outline data of converted the WorkFlowy will be copied to the clipboard.
 
 Install Development Version
 ---------------------------
@@ -42,7 +44,7 @@ See LICENSE for more info.
 Release Notes
 --------
 
-### 1.1 - 04 Feb 2016
+### 1.1 - 05 Feb 2016
 - Exports notes support
 - Built-in Theme
 - Counts the number of characters in outline on real time

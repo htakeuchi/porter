@@ -2,7 +2,7 @@
   font-family: 'FontAwesome';
   font-style: normal;
   font-weight: 400;
-  src: local('FontAwesome'), url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/fonts/fontawesome-webfont.woff) format('woff');
+  src: local('FontAwesome'), url(/css/theme/fontawesome-webfont.woff) format('woff');
 }
 
 #controlsLeft {
