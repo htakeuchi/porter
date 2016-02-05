@@ -22,7 +22,6 @@
       "js/content_script.js"
       ],
     "css": [
-//      "css/content_script.css",
       "css/jquery-ui.min.css"
       ]
     }
