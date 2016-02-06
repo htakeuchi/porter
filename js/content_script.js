@@ -3,7 +3,7 @@
   var g_textCountFlag;
   var g_CounterMsg = 'Click to count';
   var g_sideBar;
-  
+
   function elementsToArray(node) {
     var list = [];
     var e = node.querySelectorAll('div.project div.name, div.project div.notes, div.children div.childrenEnd');
@@ -112,7 +112,7 @@
       <li><a href="#">Home 10</a></li>\
       </ul>\
     </div>');
-    
+
     g_sideBar = $( "#dialog" ).dialog({
       height: 'auto',
       width : 300,
@@ -130,10 +130,12 @@
     // show icon in address bar
     chrome.extension.sendRequest({}, function(res) {});
 
-    $(window).load(function(){
+    $(document).ready(function(){
       injectCSS();
+    });
+
+    $(window).load(function(){
       addTextCounter();
-//      addSideBar();
     });
 
     chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
