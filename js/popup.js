@@ -1,7 +1,6 @@
 (function() {
   var nodes = null;
   var current_format = 'markdown';
-  var current_mode = 'heading';
   var output_notes = false;
 
   var TABLE_REGEXP = /^\|/;
@@ -31,12 +30,6 @@
     textarea_select();
   };
 
-  // switch convert mode (bullets, numbered, heading)
-  function changeMode(mode) {
-    current_mode = mode;
-    changeFormat(current_format);
-  };
-
   function hasChild(pos) {
     if (nodes[pos].type != "node") return false;
     for (var i = pos + 1; i < nodes.length; i++) {
@@ -46,44 +39,26 @@
     return false;
   };
 
-  function toMarkdown() {
-    switch (current_mode) {
-      case 'heading':
-        return toHeading();
-        break;
-      case 'bulleted':
-        return toBullets("*");
-        break;
-      case 'numbered':
-        return toBullets("1.");
-        break;
-    }
-  };
-
-  function getLineInfo(line, level) {
-    var v = {lineBreak: "", indent: "", mode: ""};
-    if (line.match(TABLE_REGEXP)) v.mode = "TABLE";
-    else if (line.match(BQ_REGEXP)) v.mode = "QUOTE";
-    else if (line.match(LIST_REGEXP)) {
-      v.indent = new Array(level-3).join("\t");
-      v.mode = "LIST";
-    } else {
-      v.lineBreak = "\n";
-      v.mode = "PARAGRAPH";
-    }
-    return v;
+  function getElement(line) {
+    var e;
+    if (line.match(TABLE_REGEXP)) e = "TABLE";
+      else if (line.match(BQ_REGEXP)) e = "QUOTE";
+      else if (line.match(LIST_REGEXP)) e = "LIST";
+      else e = "PARAGRAPH";
+    return e;
   }
 
-  function toHeading() {
+  function toMarkdown() {
     var text = "# " + nodes[0].title + "\n";
     var previous = null;
-    var prev_mode = null;
+    var prevElement = null;
     var level = 2;
+    var list_base = 0;
 
     for (var i = 1; i < nodes.length; i++) {
       var lineBreak = "";
-      var headBreak = "";
       var indent = "";
+      var element = "";
 
       if (nodes[i].type == "eoc") {
         if (previous == "eoc") level = level -1;
@@ -91,37 +66,44 @@
         continue;
       } else if (nodes[i].type == "note") {
         if (output_notes) {
-          text = text.concat("\n" + nodes[i].title + "\n");
-          prev_mode = "PARAGRAPH";
+          text = text.concat("\n" + nodes[i].title + "\n\n");
+          prevElement = "PARAGRAPH";
           continue;
         }
       } else {
-        var v = getLineInfo(nodes[i].title, level);
+        element = getElement(nodes[i].title);
 
         if (hasChild(i)) {
           level = level + 1;
           // HEADING
-          if (v.mode == "PARAGRAPH"){
-            text =  text.concat(new Array(level).join('#') + " " + nodes[i].title + "\n");
-            prev_mode = "HEADING";
+          if (element == "PARAGRAPH"){
+            if (prevElement == "QUOTE" || prevElement == "LIST") indent = "\n";
+            text =  text.concat(indent + new Array(level).join('#') + " " + nodes[i].title + "\n");
+            prevElement = "HEADING";
             continue;
           }
         }
-
+        if (element == "LIST") {
+          if (prevElement != "LIST") list_base = level;
+          indent = new Array(level - list_base).join("\t");
+        }
         if (nodes[i].title.substr(0, 3) == "```") lineBreak = "";
         else {
-          if ((prev_mode == "QUOTE" || prev_mode == "LIST") && v.mode != prev_mode) { console.log("YEAH!"); headBreak = "\n";}
-          lineBreak = v.lineBreak;
-          indent = v.indent;
+          if ((prevElement == "QUOTE" || prevElement == "LIST") && element != prevElement) {
+            indent = "\n";
+            lineBreak = "\n";
+          }
+          if (element == "PARAGRAPH") lineBreak = "\n";
         }
-        text = text.concat(headBreak + indent + nodes[i].title + "\n" + lineBreak);
+        text = text.concat(indent + nodes[i].title + "\n" + lineBreak);
       }
-      prev_mode = v.mode;
+      prevElement = element;
       previous = nodes[i].type;
     }
     return text;
   }
 
+  // noused
   function toBullets(type) {
     var text = nodes[0].title + "\n\n";
     var previous = null;
@@ -171,9 +153,6 @@
     document.getElementById("close").addEventListener("click",  function() { window.close(); }, false);
     document.getElementById("markDown").addEventListener("click",  function() { changeFormat('markdown'); }, false);
     document.getElementById("html").addEventListener("click",  function() { changeFormat('html'); }, false);
-    document.getElementById("heading").addEventListener("click",  function() { changeMode('heading'); }, false);
-    document.getElementById("bulleted").addEventListener("click",  function() { changeMode('bulleted'); }, false);
-    document.getElementById("numbered").addEventListener("click",  function() { changeMode('numbered'); }, false);
     document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);
   }
 
