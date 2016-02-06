@@ -45,6 +45,7 @@ Release Notes
 --------
 ### 1.2 - xx Feb 2016
 - Overwrite the custom CSS to theme
+- improved the output of Markdown
 
 ### 1.1 - 05 Feb 2016
 - Exports notes support

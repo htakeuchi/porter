@@ -4,6 +4,10 @@
   var current_mode = 'heading';
   var output_notes = false;
 
+  var TABLE_REGEXP = /^\|/;
+  var BQ_REGEXP = /^\>\s/;
+  var LIST_REGEXP = /^(\*\s|[0-9]+\.\s)/;
+
   // change option
   function changeOption(type) {
     output_notes = document.getElementById("outputNotes").checked;
@@ -56,32 +60,63 @@
     }
   };
 
+  function getLineInfo(line, level) {
+    var v = {lineBreak: "", indent: "", mode: ""};
+    if (line.match(TABLE_REGEXP)) v.mode = "TABLE";
+    else if (line.match(BQ_REGEXP)) v.mode = "QUOTE";
+    else if (line.match(LIST_REGEXP)) {
+      v.indent = new Array(level-3).join("\t");
+      v.mode = "LIST";
+    } else {
+      v.lineBreak = "\n";
+      v.mode = "PARAGRAPH";
+    }
+    return v;
+  }
+
   function toHeading() {
     var text = "# " + nodes[0].title + "\n";
     var previous = null;
+    var prev_mode = null;
     var level = 2;
 
     for (var i = 1; i < nodes.length; i++) {
-      if (hasChild(i)) {
-        // Heading
-        level = level + 1;
-        text =  text + "\n" + new Array(level).join('#') + " " + nodes[i].title;
-      } else if (nodes[i].type == "eoc") {
-        if (previous == "eoc") {
-          level = level -1;
-        }
+      var lineBreak = "";
+      var headBreak = "";
+      var indent = "";
+
+      if (nodes[i].type == "eoc") {
+        if (previous == "eoc") level = level -1;
         previous = nodes[i].type;
         continue;
-      } else {
-        // node or notes
-        if (nodes[i].type == "node" || output_notes) {
-          text = text.concat(nodes[i].title) + "\n";
-        } else {
-          previous = nodes[i].type;
+      } else if (nodes[i].type == "note") {
+        if (output_notes) {
+          text = text.concat("\n" + nodes[i].title + "\n");
+          prev_mode = "PARAGRAPH";
           continue;
-        };
-      };
-      text = text.concat("\n");
+        }
+      } else {
+        var v = getLineInfo(nodes[i].title, level);
+
+        if (hasChild(i)) {
+          level = level + 1;
+          // HEADING
+          if (v.mode == "PARAGRAPH"){
+            text =  text.concat(new Array(level).join('#') + " " + nodes[i].title + "\n");
+            prev_mode = "HEADING";
+            continue;
+          }
+        }
+
+        if (nodes[i].title.substr(0, 3) == "```") lineBreak = "";
+        else {
+          if ((prev_mode == "QUOTE" || prev_mode == "LIST") && v.mode != prev_mode) { console.log("YEAH!"); headBreak = "\n";}
+          lineBreak = v.lineBreak;
+          indent = v.indent;
+        }
+        text = text.concat(headBreak + indent + nodes[i].title + "\n" + lineBreak);
+      }
+      prev_mode = v.mode;
       previous = nodes[i].type;
     }
     return text;
