@@ -28,13 +28,15 @@
     {'label': 'Big Black Workflowy by rsynnest',
       'filename': 'big-black-workflowy'
     },
-    {'label': 'CUSTOM',
+    {'label': 'Custom CSS Only (unused built-in theme)',
       'filename': 'CUSTOM'
     },
   ];
 
   function save() {
-    // Custom CSS
+    $('#alert').css('display','block');
+    setTimeout(function() {$('#alert').fadeOut();}, 3000);
+
     chrome.storage.sync.set({
       'custom_css': editor.getValue(),
       'theme': current_theme,
@@ -43,7 +45,6 @@
     });
   };
 
-  // TODO: 一括してロードする
   function load() {
     chrome.storage.sync.get("theme_enable", function(storage) {
       document.getElementById('themeEnable').checked = storage.theme_enable;
@@ -79,23 +80,12 @@
   }
 
   function toggle_theme_enable() {
-    var select = document.getElementById('themeSelect');
-    select.disabled = !select.disabled;
     change_theme();
   }
 
   function change_theme() {
     var select = document.getElementById('themeSelect');
-    var e = document.getElementById('editorArea');
     current_theme = select.value;
-
-    if (select.value == "CUSTOM" && document.getElementById('themeEnable').checked) {
-      e.style.display = 'block';
-      editor.refresh();
-    } else {
-      theme_css =
-      e.style.display = 'none';
-    }
   }
 
   function main() {

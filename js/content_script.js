@@ -38,7 +38,23 @@
     }
   }
 
-// TODO: 一括してロードする
+  function injectCSS() {
+    chrome.storage.sync.get(["theme_enable", "theme", "custom_css"], function (option) {
+      if (!option.theme_enable) return;
+      console.log(option.theme);
+
+      if (option.theme != "CUSTOM") {
+        var link = document.createElement("link");
+        link.href = chrome.extension.getURL("css/theme/"+option.theme+".css");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        document.getElementsByTagName("head")[0].appendChild(link);
+      }
+      if (option.custom_css.length > 0) setCSS(option.custom_css);
+    });
+  }
+
+/*
   function injectCSS() {
     chrome.storage.sync.get("theme_enable", function(storage) {
       if (storage.theme_enable) {
@@ -60,7 +76,7 @@
       }
     });
   };
-
+*/
   function addTextCounter() {
     var styles = {
       "font-size" : "13px",
