@@ -4,8 +4,8 @@
   var output_notes = false;
 
   var TABLE_REGEXP = /^\|/;
-  var BQ_REGEXP = /^\>\s/;
-  var LIST_REGEXP = /^(\*\s|[0-9]+\.\s)/;
+  var BQ_REGEXP = /^\>/;
+  var LIST_REGEXP = /^((\*|\-|\+)\s|[0-9]+\.\s)/;
 
   // change option
   function changeOption(type) {
@@ -48,12 +48,14 @@
     return e;
   }
 
+  // TODO: teribble... refactoring
   function toMarkdown() {
     var text = "# " + nodes[0].title + "\n";
     var previous = null;
     var prevElement = null;
     var level = 2;
-    var list_base = 0;
+    var list_level = 0;
+    var eoc = false;
 
     for (var i = 1; i < nodes.length; i++) {
       var lineBreak = "";
@@ -61,7 +63,12 @@
       var element = "";
 
       if (nodes[i].type == "eoc") {
-        if (previous == "eoc") level = level -1;
+        eoc = true;
+
+        if (previous == "eoc") {
+          level = level - 1;
+          list_level = list_level - 1;
+        }
         previous = nodes[i].type;
         continue;
       } else if (nodes[i].type == "note") {
@@ -83,9 +90,19 @@
             continue;
           }
         }
+
         if (element == "LIST") {
-          if (prevElement != "LIST") list_base = level;
-          indent = new Array(level - list_base).join("\t");
+          if (prevElement != "LIST") {
+            eoc = false;
+            list_level = 1;
+          } else {
+            if (!eoc) {
+              list_level = list_level + 1;
+            } else {
+              eoc = false;
+            }
+          }
+          indent = new Array(list_level).join("\t");
         }
         if (nodes[i].title.substr(0, 3) == "```") lineBreak = "";
         else {
