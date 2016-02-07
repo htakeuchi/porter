@@ -104,7 +104,8 @@
           }
           indent = new Array(list_level).join("\t");
         }
-        if (nodes[i].title.substr(0, 3) == "```") lineBreak = "";
+        if (nodes[i].title.substr(0, 3) == "```")
+          lineBreak = "";
         else {
           if ((prevElement == "QUOTE" || prevElement == "LIST") && element != prevElement) {
             indent = "\n";
@@ -163,7 +164,7 @@
     var t = document.getElementById('textArea');
     t.focus();
     t.select();
-    document.execCommand("copy");
+    setTimeout(function() { document.execCommand("copy") }, 200);
   };
 
   function setEventListers(){
@@ -187,7 +188,7 @@
 
     port.postMessage();
     setEventListers();
-    setTimeout(function() {textarea_select();}, 0);
+    textarea_select();
   };
 
   window.onload = main;
