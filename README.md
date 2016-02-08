@@ -43,8 +43,8 @@ See LICENSE for more info.
 
 Release Notes
 --------
-### 1.2 - xx Feb 2016
-- Overwrite the custom CSS to theme
+### 1.2 - 09 Feb 2016
+- Overwrite custom CSS to the built-in theme
 - improved the output of Markdown
 
 ### 1.1 - 05 Feb 2016
