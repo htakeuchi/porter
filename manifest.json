@@ -22,14 +22,17 @@
       "js/content_script.js"
       ],
     "css": [
-      "css/jquery-ui.min.css"
+      "css/jquery-ui.min.css",
+      "css/content_scripts.css"
       ]
     }
   ],
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "bookmarks",
+    "history"
   ],
 
   "page_action": {
@@ -40,7 +43,8 @@
   "options_page": "options.html",
 
   "web_accessible_resources": [
-    "css/theme/*"
+    "css/theme/*",
+    "images/treeview/*"
     ],
 
   "manifest_version": 2

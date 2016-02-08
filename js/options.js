@@ -4,7 +4,7 @@
   var theme_css;
 
   var themes = [
-    {'label': 'Porter theme for WorkFlowy by @htakeuchi',
+    {'label': 'Porter theme for WorkFlowy by \htakeuchi',
       'filename': 'porter'
     },
     {'label': 'Work a Simpler Flowy v2.0 by 72dpi',
@@ -39,7 +39,7 @@
       'custom_css': editor.getValue(),
       'theme': current_theme,
       'theme_css': theme_css,
-      'theme_enable': document.getElementById('themeEnable').checked,
+      'theme_enable': document.getElementById('themeEnable').checked
     });
   };
 
