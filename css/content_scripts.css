@@ -1,0 +1,35 @@
+.bookmarklist
+,.bookmarklist li{
+	padding:0px;
+	margin:0px;
+}
+ 
+.bookmarklist li{
+	list-style-type:none !important;
+	list-style-image:none !important;
+	margin: 5px 0px 5px 0px !important;
+	position:relative;
+	padding-left:20px;
+}
+  
+.bookmarklist li:before{
+	content:''; 
+	height:0px; 
+	width: 90%;
+	display:block; 
+	position:absolute; 
+	top:18px; 
+	left:0px; 
+}
+
+.bookmarklist li:after{
+	content:'';
+	display:block; 
+	position:absolute; 
+	background:#aaa;
+	width:5px;
+	height:5px; 
+	top:7px; 
+	left:5px; 
+	border-radius: 5px;
+}

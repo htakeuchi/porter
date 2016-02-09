@@ -1,7 +1,10 @@
+/* global bookMarks */
 (function(global) {
   var g_timerID;
   var g_textCountFlag;
   var g_CounterMsg = 'Click to count';
+  var SEARCH_STRING = "https://workflowy.com/#/";
+  var MAX_LISTS = 10;
 
   function elementsToArray(node) {
     var list = [];
@@ -95,44 +98,37 @@
     $('#textCounter').html(html);
   }
 
-  function replaceSideBar(bookMarks, history) {
-    var sidebar = '<h3>Bookmarks</h3><ul class="bookmarklist">';
-console.log(bookMarks);    
-    bookMarks = bookMarks.sort(function(a,b){
-      if( a.title < b.title ) return -1;
-      if( a.title > b.title ) return 1;
-      return 0;
-    }); 
-    for (var i = 0; i < bookMarks.length; i++) {
-      var url = bookMarks[i].url;
-      var title = bookMarks[i].title.replace(/ - WorkFlowy$/, '');
-      sidebar = sidebar.concat('<li><a href="' + url + '">' + title + '</a></li>');
+  function getHtml(list){
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+      var url = list[i].url;
+      var title = list[i].title.replace(/ - WorkFlowy$/, '');
+      html = html.concat('<li><a href="' + url + '">' + title + '</a></li>');
     }
-    sidebar = sidebar.concat('</ul>');
+    return html;
+  }
+ 
+  function replaceSideBar()
+  {
+    chrome.extension.sendRequest({type: 'getBookmarks'}, function(contents) {
+      // Create Bookmark list
+      var sidebar = '<h3>Bookmarks</h3><ul class="bookmarklist">';
+      var bookMarks = contents.bookMarks.sort(function(a,b){
+        if( a.title < b.title ) return -1;
+        if( a.title > b.title ) return 1;
+        return 0;
+      }); 
+      sidebar = sidebar.concat(getHtml(bookMarks) + '</ul>');
 
-    sidebar = sidebar.concat('<h3>History</h3><ul class="bookmarklist">');
-    for (var i = 0; i < history.length; i++) {
-      var url = history[i].url;
-      var title = history[i].title.replace(/ - WorkFlowy$/, '');
-      sidebar = sidebar.concat('<li><a href="' + url + '">' + title + '</a></li>');
-    }
-    sidebar = sidebar.concat('</ul>');
-
-    $('#keyboardShortcutHelper').html(sidebar);
+      $('#keyboardShortcutHelper').html(sidebar);
+    });
   }
 
   function main() {
-    var bookMarks;
-    var history;
-    
     g_textCountFlag = false;
-    // show icon in address bar
-    chrome.extension.sendRequest({}, function(contents) {
 
-console.log(contents);
-      bookMarks = contents.bookMarks; 
-      history = contents.history;
-    });
+    // show icon in address bar
+    chrome.extension.sendRequest({type: 'showIcon'}, function() {});
 
     $(document).ready(function(){
       injectCSS();
@@ -140,7 +136,7 @@ console.log(contents);
 
     $(window).load(function(){
       addTextCounter();
-      replaceSideBar(bookMarks, history);
+      replaceSideBar();
     });
 
     chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
