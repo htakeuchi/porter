@@ -19,10 +19,12 @@
     "js": [
       "js/jquery-2.2.0.min.js",
       "js/jquery-ui.min.js",
+      "js/jquery.treeview.js",
       "js/content_script.js"
       ],
     "css": [
       "css/jquery-ui.min.css",
+      "css/jquery.treeview.css",
       "css/content_scripts.css"
       ]
     }
@@ -31,8 +33,7 @@
   "permissions": [
     "activeTab",
     "storage",
-    "bookmarks",
-    "history"
+    "bookmarks"
   ],
 
   "page_action": {
@@ -44,7 +45,7 @@
 
   "web_accessible_resources": [
     "css/theme/*",
-    "images/treeview/*"
+    "image/treeview/*"
     ],
 
   "manifest_version": 2

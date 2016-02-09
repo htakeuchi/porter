@@ -112,15 +112,10 @@
   {
     chrome.extension.sendRequest({type: 'getBookmarks'}, function(contents) {
       // Create Bookmark list
-      var sidebar = '<h3>Bookmarks</h3><ul class="bookmarklist">';
-      var bookMarks = contents.bookMarks.sort(function(a,b){
-        if( a.title < b.title ) return -1;
-        if( a.title > b.title ) return 1;
-        return 0;
-      }); 
-      sidebar = sidebar.concat(getHtml(bookMarks) + '</ul>');
-
+      var sidebar = '<h3>Bookmarks</h3>';
+      sidebar = sidebar.concat(contents.bookMarks);
       $('#keyboardShortcutHelper').html(sidebar);
+    	$('#browser').treeview();
     });
   }
 
