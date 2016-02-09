@@ -4,7 +4,6 @@
   var g_textCountFlag;
   var g_CounterMsg = 'Click to count';
   var SEARCH_STRING = "https://workflowy.com/#/";
-  var MAX_LISTS = 10;
 
   function elementsToArray(node) {
     var list = [];

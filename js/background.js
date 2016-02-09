@@ -1,6 +1,5 @@
 (function() {
   var SEARCH_STRING = "https://workflowy.com/#/";
-  var g_BookMark = '';
   
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -42,9 +41,9 @@
     } else {
       var bookmarkTreeNodes = chrome.bookmarks.getTree(
         function(bookmarkTreeNodes) {
-          g_BookMark = g_BookMark.concat(dumpTreeNodes(bookmarkTreeNodes, SEARCH_STRING));
+          var bookMark = dumpTreeNodes(bookmarkTreeNodes, SEARCH_STRING);
           var contents = Object();
-          contents.bookMarks = adjustHtml(g_BookMark);
+          contents.bookMarks = adjustHtml(bookMark);
           sendResponse(contents);
         });  
     }

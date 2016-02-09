@@ -25,7 +25,7 @@
     "css": [
       "css/jquery-ui.min.css",
       "css/jquery.treeview.css",
-      "css/content_scripts.css"
+      "css/content_script.css"
       ]
     }
   ],
