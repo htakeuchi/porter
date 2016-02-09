@@ -40,7 +40,7 @@
   }
 
   function injectCSS() {
-    chrome.storage.sync.get(["theme_enable", "theme", "custom_css", "bookmark_enable"], function (option) {
+    chrome.storage.sync.get(["theme_enable", "theme", "custom_css"], function (option) {
       if (!option.theme_enable) return;
 
       if (option.theme != "CUSTOM") {
@@ -98,7 +98,7 @@
     }
     return html;
   }
- 
+
   function replaceSideBar()
   {
     chrome.storage.sync.get("bookmark_enable", function (option) {
