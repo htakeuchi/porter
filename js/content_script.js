@@ -39,28 +39,20 @@
     }
   }
 
-// TODO: 一括してロードする
   function injectCSS() {
-    chrome.storage.sync.get("theme_enable", function(storage) {
-      if (storage.theme_enable) {
-        chrome.storage.sync.get("theme", function(storage) {
-          if (storage.theme == "CUSTOM") {
-            chrome.storage.sync.get("custom_css", function(storage) {
-              setCSS(storage.custom_css);
-            });
-          } else {
-            chrome.storage.sync.get("theme", function(storage) {
-              var link = document.createElement("link");
-              link.href = chrome.extension.getURL("css/theme/"+storage.theme+".css");
-              link.type = "text/css";
-              link.rel = "stylesheet";
-              document.getElementsByTagName("head")[0].appendChild(link);
-            });
-          };
-        });
+    chrome.storage.sync.get(["theme_enable", "theme", "custom_css", "bookmark_enable"], function (option) {
+      if (!option.theme_enable) return;
+
+      if (option.theme != "CUSTOM") {
+        var link = document.createElement("link");
+        link.href = chrome.extension.getURL("css/theme/"+option.theme+".css");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        document.getElementsByTagName("head")[0].appendChild(link);
       }
+      if (option.custom_css.length > 0) setCSS(option.custom_css);
     });
-  };
+  }
 
   function addTextCounter() {
     var styles = {
@@ -109,12 +101,16 @@
  
   function replaceSideBar()
   {
-    chrome.extension.sendRequest({type: 'getBookmarks'}, function(contents) {
-      // Create Bookmark list
-      var sidebar = '<h3>Bookmarks</h3>';
-      sidebar = sidebar.concat(contents.bookMarks);
-      $('#keyboardShortcutHelper').html(sidebar);
-    	$('#browser').treeview();
+    chrome.storage.sync.get("bookmark_enable", function (option) {
+      if (option.bookmark_enable) {
+        chrome.extension.sendRequest({type: 'getBookmarks'}, function(contents) {
+          // Create Bookmark list
+          var sidebar = '<h3>Bookmarks</h3>';
+          sidebar = sidebar.concat(contents.bookMarks);
+          $('#keyboardShortcutHelper').html(sidebar);
+          $('#browser').treeview();
+        });
+      }
     });
   }
 

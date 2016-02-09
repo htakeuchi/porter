@@ -1,30 +1,30 @@
 /******************************************************************
    Porter theme for WorkFlowy by TAKEUCHI, Hitoshi (@htakeuchi)
 
-   This theme was made based on the Work a Simpler Flowy v2.0
+   This theme was written based on the "Work a Simpler Flowy v2.0"
    by 72dpi.
 
    https://userstyles.org/styles/123191/work-a-simpler-flowy-v2-0
  ******************************************************************/
 
 @font-face {
-  font-family: 'FontAwesome';
-  font-style: normal;
-  font-weight: 400;
-  src: local('FontAwesome'), url(/css/theme/fontawesome-webfont.woff) format('woff');
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: 400;
+    src: local('FontAwesome'), url(/css/theme/fontawesome-webfont.woff) format('woff');
 }
 
 #controlsLeft {
-    background-color: #fff;
+    background-color: #4cb9ff;/*#fff;*/
     border: 1px solid #ccc;
     border-radius: 0;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.09);
-		font-family: Meiryo, Sana, Calibri, Trebuchet, Verdana, sans-serif;
+    font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
     letter-spacing: 1.6px;
-    text-transform: uppercase;
 }
 
 #controlsLeft a {
+  color: #fff;
     margin-bottom: 6px;
 }
 
@@ -34,7 +34,7 @@
 }
 
 #documentView {
-		font-family: Meiryo, Sana, Calibri, Trebuchet, Verdana, sans-serif;
+    font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
 }
 
 #pageContainer .project.open.selected > .children > .project > .name {
@@ -208,4 +208,9 @@ div.project.open.selected > div.children > div.open > div.notes {
 .contentItalic{
   background: linear-gradient(transparent 40%, #66FFCC 40%);
   font-style: normal;
+}
+
+#savedViewHUD {
+  top: 30px;
+  bottom: auto;
 }
