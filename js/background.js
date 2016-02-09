@@ -1,5 +1,6 @@
 (function() {
   var SEARCH_STRING = "https://workflowy.com/#/";
+  var REPLACE_STRING = / \- WorkFlowy$/;
   
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -18,8 +19,10 @@
     if (typeof bookmarkNode.url === "undefined") {
       li = '<li class="closed"><span class="folder">' + bookmarkNode.title + '</span>';
     } else { 
-      if (bookmarkNode.url.indexOf(query) >= 0) 
-        li = '<li><span class="file"><a href="' + bookmarkNode.url + '">' + bookmarkNode.title + '</a></span></li>';
+      if (bookmarkNode.url.indexOf(query) >= 0) {
+        var title = bookmarkNode.title.replace(REPLACE_STRING, '');
+        li = '<li><span class="file"><a href="' + bookmarkNode.url + '">' + title + '</a></span></li>';
+      }
     }
 
     if (bookmarkNode.children && bookmarkNode.children.length > 0) {
