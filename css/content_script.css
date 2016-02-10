@@ -1,0 +1,13 @@
+.bookmark {
+  font-family: Meiryo, Sana, Calibri, Trebuchet, Verdana, sans-serif;
+  padding: 8px 4px 8px 4px;
+}
+
+.bookmarkHeading {
+  border:1px solid #000;
+  padding:5px;
+  font-weight:bold;
+  font-size:14px;
+  background-color:#000;
+  color:#fff;
+}

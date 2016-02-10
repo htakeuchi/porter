@@ -18,18 +18,20 @@
     "matches": ["https://workflowy.com/*"],
     "js": [
       "js/jquery-2.2.0.min.js",
-      "js/jquery-ui.min.js",
+      "js/jquery.treeview.js",
       "js/content_script.js"
       ],
     "css": [
-      "css/jquery-ui.min.css"
+      "css/jquery.treeview.css",
+      "css/content_script.css"
       ]
     }
   ],
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "bookmarks"
   ],
 
   "page_action": {
@@ -40,7 +42,8 @@
   "options_page": "options.html",
 
   "web_accessible_resources": [
-    "css/theme/*"
+    "css/theme/*",
+    "image/treeview/*"
     ],
 
   "manifest_version": 2

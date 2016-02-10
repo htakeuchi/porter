@@ -1,8 +1,9 @@
+/* global bookMarks */
 (function(global) {
   var g_timerID;
   var g_textCountFlag;
   var g_CounterMsg = 'Click to count';
-  var g_sideBar;
+  var SEARCH_STRING = "https://workflowy.com/#/";
 
   function elementsToArray(node) {
     var list = [];
@@ -88,39 +89,38 @@
     $('#textCounter').html(html);
   }
 
-  function addSideBar() {
-    $('body').append('\
-    <div id="dialog" title="Quick Access">\
-      <ul>\
-      <li><a href="#">Home</a></li>\
-      <li><a href="#">Home 2</a></li>\
-      <li><a href="#">Home 3</a></li>\
-      <li><a href="#">Home 4</a></li>\
-      <li><a href="#">Home 5</a></li>\
-      <li><a href="#">Home 6</a></li>\
-      <li><a href="#">Home 7</a></li>\
-      <li><a href="#">Home 8</a></li>\
-      <li><a href="#">Home 9</a></li>\
-      <li><a href="#">Home 10</a></li>\
-      </ul>\
-    </div>');
+  function getHtml(list){
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+      var url = list[i].url;
+      var title = list[i].title.replace(/ - WorkFlowy$/, '');
+      html = html.concat('<li><a href="' + url + '">' + title + '</a></li>');
+    }
+    return html;
+  }
 
-    g_sideBar = $( "#dialog" ).dialog({
-      height: 'auto',
-      width : 300,
-      position: {
-        of : window,
-        at: 'right top',
-        my: 'right top'
+  function replaceSideBar()
+  {
+    chrome.storage.sync.get("bookmark_enable", function (option) {
+      if (option.bookmark_enable) {
+        chrome.extension.sendRequest({type: 'getBookmarks'}, function(contents) {
+          // Create Bookmark list
+          var sidebar = '<h3>Porter for WorkFlowy</h3>';
+          sidebar = sidebar.concat(contents.bookMarks);
+          $('#keyboardShortcutHelper').html(sidebar);
+          $('#keyboardShortcutHelper').addClass('bookmark');
+          $('#keyboardShortcutHelper h3').addClass('bookmarkHeading');
+          $('#browser').treeview();
+        });
       }
     });
-    g_sideBar.parent().css({position: 'fixed'})
   }
 
   function main() {
     g_textCountFlag = false;
+
     // show icon in address bar
-    chrome.extension.sendRequest({}, function(res) {});
+    chrome.extension.sendRequest({type: 'showIcon'}, function() {});
 
     $(document).ready(function(){
       injectCSS();
@@ -128,6 +128,7 @@
 
     $(window).load(function(){
       addTextCounter();
+      replaceSideBar();
     });
 
     chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {

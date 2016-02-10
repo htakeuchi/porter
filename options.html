@@ -21,6 +21,19 @@
       <div class="alert alert-info" role="alert" id="alert" style="display:none;"><strong>Saved!</strong></div>
       <div class="panel panel-default">
         <div class="panel-heading">
+          <h3 class="panel-title">Options</h3>
+        </div>
+        <div class="panel-body">
+          <form>
+            <div class="form-group">
+              <input type="checkbox" id="bookmarkEnable"> Replace WorkFlowy's help to Bookmark
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
           <h3 class="panel-title">Theme</h3>
         </div>
         <div class="panel-body">
@@ -28,17 +41,14 @@
             <div class="form-group">
               <input type="checkbox" id="themeEnable"> Enable Theme
             </div>
-
             <div class="form-group">
               <label for="themeSelect">Base Theme</label>
               <select class="form-control" id="themeSelect"></select>
             </div>
-
             <label for="textArea">Cutom CSS</label>
             <div class="form-group" id="editorArea" style="border: 1px solid #ccc;" disabled>
               <textarea class="form-control" id="textArea" rows="10" ></textarea>
             </div>
-
             <div class="form-group">
               <button id="save"  type="button" class="btn btn-primary center-block" >APPLY</button>
             </div>

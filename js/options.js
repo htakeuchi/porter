@@ -4,7 +4,7 @@
   var theme_css;
 
   var themes = [
-    {'label': 'Porter theme for WorkFlowy by @htakeuchi',
+    {'label': 'Porter theme for WorkFlowy by \htakeuchi',
       'filename': 'porter'
     },
     {'label': 'Work a Simpler Flowy v2.0 by 72dpi',
@@ -42,29 +42,35 @@
       'theme': current_theme,
       'theme_css': theme_css,
       'theme_enable': document.getElementById('themeEnable').checked,
+      'bookmark_enable': document.getElementById('bookmarkEnable').checked
     });
   };
 
   function load() {
-    chrome.storage.sync.get("theme_enable", function(storage) {
-      document.getElementById('themeEnable').checked = storage.theme_enable;
-      if (storage.theme_enable) {toggle_theme_enable();}
-    });
-
-    chrome.storage.sync.get("theme", function(storage) {
-      current_theme = storage.theme;
-      setThemeList();
-      change_theme();
-    });
-
-    chrome.storage.sync.get("theme_css", function(storage) {
-      theme_css = storage.theme_css;
-    });
-
-    chrome.storage.sync.get("custom_css", function(storage) {
-      editor.setValue(storage.custom_css);
-    });
-  };
+    chrome.storage.sync.get([
+      "theme_enable", "theme", "theme_css", "custom_css", "bookmark_enable"
+      ], 
+      function (option) {
+        // Enable Theme
+        document.getElementById('themeEnable').checked = option.theme_enable;
+        if (option.theme_enable) {toggle_theme_enable();}
+  
+        // Theme
+        current_theme = option.theme;
+        setThemeList();
+        change_theme();
+  
+        // Theme CSS
+        theme_css = option.theme_css;
+        
+        // Aditional CSS
+        editor.setValue(option.custom_css);
+        
+        // Enable Bookmark
+        document.getElementById('bookmarkEnable').checked = option.bookmark_enable;
+      }
+    );
+  }
 
   function setThemeList()
   {
