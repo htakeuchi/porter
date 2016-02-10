@@ -9,22 +9,32 @@
 
   function toHtml(nodes) {
     var html = '';
-    for (var i = nodes.length - 1 ; i >= 0; i--) {
-      if (nodes[i].children.length > 0 ) {
-        // folder
-        html = html.concat('<ul><li class="closed"><span class="folder">'+ nodes[i].title + '</span>');
-        html = html.concat(toHtml(nodes[i].children) + '</li></ul>');
+    for (var i = 0; i < nodes.length; i++) {
+      // folder and no children
+      if (typeof nodes[i].url === "undefined" && nodes[i].children.length == 0) {
+        continue;
       } else {
-        // folder and no children
-        if (typeof nodes[i].url === "undefined") {
-          nodes.splice(i, 1);
-        } else {
-        // Bookmark  
-          html = html.concat('<li><span class="file"><a href="'+ nodes[i].url + '">' + nodes[i].title + '</a></span></li>');
-        }
+        html = html.concat(elementToHtml(nodes[i]));
       }
     }
     return html;
+  }
+  
+  function elementToHtml(node) {
+    var html = '';
+
+    if (typeof node.url === "undefined" && node.children.length == 0) return html;
+
+    if (node.children.length > 0) {
+      html = html.concat('<ul><li class="closed"><span class="folder">'+ node.title + '</span><ul>');
+      for (var j=0; j < node.children.length; j++) {
+        html = html.concat(elementToHtml(node.children[j]));
+      }
+      html = html.concat('</ul></ul></li>');
+    } else {
+      html = html.concat('<li><span class="file"><a href="'+ node.url + '">' + node.title + '</a></span></li>');      
+    }
+    return html;    
   }
   
   function dumpTreeNodes(bookmarkNodes, query) {
@@ -56,7 +66,8 @@
     } else {
       chrome.bookmarks.getTree(
         function(bookmarkTreeNodes) {
-          var bm = adjustHtml(toHtml(dumpTreeNodes(bookmarkTreeNodes, SEARCH_STRING)));
+          var bm = dumpTreeNodes(bookmarkTreeNodes, SEARCH_STRING);
+          bm = adjustHtml(toHtml(bm));
           sendResponse({bookMarks: bm});
         }
       );

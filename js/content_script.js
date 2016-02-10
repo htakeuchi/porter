@@ -3,7 +3,6 @@
   var g_timerID;
   var g_textCountFlag;
   var g_CounterMsg = 'Click to count';
-  var SEARCH_STRING = "https://workflowy.com/#/";
 
   function elementsToArray(node) {
     var list = [];

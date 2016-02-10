@@ -43,6 +43,9 @@ See LICENSE for more info.
 
 Release Notes
 --------
+### 1.3 - XX XXX 2016
+- Replaceable original keyboard shortcut sidebar to Bookmark list(extract only workflowy.com domain)
+
 ### 1.2 - 09 Feb 2016
 - Overwrite custom CSS to the built-in theme
 - improved the output of Markdown
