@@ -108,6 +108,8 @@
           var sidebar = '<h3>Bookmarks</h3>';
           sidebar = sidebar.concat(contents.bookMarks);
           $('#keyboardShortcutHelper').html(sidebar);
+          $('#keyboardShortcutHelper').addClass('bookmark');
+          $('#keyboardShortcutHelper h3').addClass('bookmarkHeading');
           $('#browser').treeview();
         });
       }

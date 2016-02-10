@@ -18,7 +18,6 @@
     "matches": ["https://workflowy.com/*"],
     "js": [
       "js/jquery-2.2.0.min.js",
-      "js/jquery-ui.min.js",
       "js/jquery.treeview.js",
       "js/content_script.js"
       ],
