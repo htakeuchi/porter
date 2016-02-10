@@ -2,39 +2,51 @@
   var SEARCH_STRING = "https://workflowy.com/#/";
   var REPLACE_STRING = / \- WorkFlowy$/;
 
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+  function adjustHtml(s) {
+    s = s.replace(/\<\/span>/, 'Top</span>').replace(/^\<ul\>/, '<ul id="browser" class="filetree">');
+    return s.replace(/ class="closed"/, '');
+  }
 
-  function dumpTreeNodes(bookmarkNodes, query) {
-    var list = '<ul>';
-    var i;
-    for (i = 0; i < bookmarkNodes.length; i++) {
-      list = list.concat(dumpNode(bookmarkNodes[i], query));
+  function toHtml(nodes) {
+    var html = '';
+    for (var i = nodes.length - 1 ; i >= 0; i--) {
+      if (nodes[i].children.length > 0 ) {
+        // folder
+        html = html.concat('<ul><li class="closed"><span class="folder">'+ nodes[i].title + '</span>');
+        html = html.concat(toHtml(nodes[i].children) + '</li></ul>');
+      } else {
+        // folder and no children
+        if (typeof nodes[i].url === "undefined") {
+          nodes.splice(i, 1);
+        } else {
+        // Bookmark  
+          html = html.concat('<li><span class="file"><a href="'+ nodes[i].url + '">' + nodes[i].title + '</a></span></li>');
+        }
+      }
     }
-    return list.concat('</ul>');
+    return html;
+  }
+  
+  function dumpTreeNodes(bookmarkNodes, query) {
+    var list = [];
+    for (var i = 0; i < bookmarkNodes.length; i++) {
+      if ((typeof bookmarkNodes[i].url === "undefined") || (bookmarkNodes[i].url.indexOf(query) >= 0)) {
+        list.push(dumpNode(bookmarkNodes[i], query));
+      }
+    }
+    return list;
   }
   function dumpNode(bookmarkNode, query) {
-    var li = '';
-    if (typeof bookmarkNode.url === "undefined") {
-      li = '<li class="closed"><span class="folder">' + bookmarkNode.title + '</span>';
-    } else {
-      if (bookmarkNode.url.indexOf(query) >= 0) {
-        var title = bookmarkNode.title.replace(REPLACE_STRING, '');
-        li = '<li><span class="file"><a href="' + bookmarkNode.url + '">' + title + '</a></span></li>';
-      }
+    var li = {url: bookmarkNode.url, title:  bookmarkNode.title, children: []};
+    
+    if ((typeof li.url !== "undefined") && (li.url.indexOf(query) >= 0)) {
+      li.title = li.title.replace(REPLACE_STRING, '');
     }
 
     if (bookmarkNode.children && bookmarkNode.children.length > 0) {
-      li = li.concat(dumpTreeNodes(bookmarkNode.children, query));
-      li = li.concat('</li>');
+      li.children = dumpTreeNodes(bookmarkNode.children, query);
     }
     return li;
-  }
-
-  function adjustHtml(s) {
-    s = s.replace(/(^\<ul\>\<li class="closed"\>\<span class="folder"\>\<\/span\>)|(\<\/ul\>$)/g, '');
-    return s.replace(/^\<ul\>/, '<ul id="browser" class="filetree">');
   }
 
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
@@ -42,13 +54,12 @@
       // show extension icon on address bar
       chrome.pageAction.show(sender.tab.id);
     } else {
-      var bookmarkTreeNodes = chrome.bookmarks.getTree(
+      chrome.bookmarks.getTree(
         function(bookmarkTreeNodes) {
-          var bookMark = dumpTreeNodes(bookmarkTreeNodes, SEARCH_STRING);
-          var contents = Object();
-          contents.bookMarks = adjustHtml(bookMark);
-          sendResponse(contents);
-        });
+          var bm = adjustHtml(toHtml(dumpTreeNodes(bookmarkTreeNodes, SEARCH_STRING)));
+          sendResponse({bookMarks: bm});
+        }
+      );
     }
   });
 

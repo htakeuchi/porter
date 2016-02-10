@@ -105,7 +105,7 @@
       if (option.bookmark_enable) {
         chrome.extension.sendRequest({type: 'getBookmarks'}, function(contents) {
           // Create Bookmark list
-          var sidebar = '<h3>Bookmarks</h3>';
+          var sidebar = '<h3>Porter for WorkFlowy</h3>';
           sidebar = sidebar.concat(contents.bookMarks);
           $('#keyboardShortcutHelper').html(sidebar);
           $('#keyboardShortcutHelper').addClass('bookmark');
