@@ -2,14 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Porter for WorkFlowy</title>
-
     <link href="css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <div class="panel panel-info" style="width:500px; margin-bottom:0;">
+    <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title" id="popupTitle">Porter for WorkFlowy</h3>
       </div>
@@ -45,14 +42,13 @@
                 </td>
               </tr>
             </table>
-          </div>
-
-          <div class="form-group">
-            <button id="close" type="submit" class="btn btn-default center-block">CLOSE</button>
+            <button id="previewButton" type="button" class="btn btn-info">Preview</button>
+            <button id="close" type="button" class="btn btn-default pull-right">Close</button>
           </div>
         </form>
       </div>
     </div>
+    <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="js/marked.min.js"></script>
     <script type="text/javascript" src="js/popup.js" async=""></script>
   </body>

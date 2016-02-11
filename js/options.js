@@ -49,23 +49,23 @@
   function load() {
     chrome.storage.sync.get([
       "theme_enable", "theme", "theme_css", "custom_css", "bookmark_enable"
-      ], 
+      ],
       function (option) {
         // Enable Theme
         document.getElementById('themeEnable').checked = option.theme_enable;
         if (option.theme_enable) {toggle_theme_enable();}
-  
+
         // Theme
         current_theme = option.theme;
         setThemeList();
         change_theme();
-  
+
         // Theme CSS
         theme_css = option.theme_css;
-        
+
         // Aditional CSS
         editor.setValue(option.custom_css);
-        
+
         // Enable Bookmark
         document.getElementById('bookmarkEnable').checked = option.bookmark_enable;
       }
@@ -95,7 +95,10 @@
   }
 
   function main() {
-    document.getElementById("save").addEventListener("click",  function() { save(); }, false);
+console.log($(".applyButton"));
+
+    document.getElementById("apply1").addEventListener("click",  function() { save(); }, false);
+    document.getElementById("apply2").addEventListener("click",  function() { save(); }, false);
     document.getElementById("themeEnable").addEventListener("click",  function() { toggle_theme_enable(); }, false);
     document.getElementById("themeSelect").addEventListener("change",  function() { change_theme(); }, false);
 
