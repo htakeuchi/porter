@@ -42,6 +42,7 @@
   "options_page": "options.html",
 
   "web_accessible_resources": [
+    "http://fonts.gstatic.com/*",
     "css/theme/*",
     "image/treeview/*"
     ],

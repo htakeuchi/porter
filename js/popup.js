@@ -182,7 +182,8 @@
   }
 
   function preview() {
-    var html = '<div style="width:800px;">' + toHtml() + '</div>';
+    var img = '<img src="' + chrome.extension.getURL('image/space.gif') + '" width="800" height="1" alt="">';
+    var html = '<div id="content">' + img + toHtml() + '</div>';
     //$('#contents').load(chrome.extension.getURL("css/theme/"+option.theme+".css");
     $('body').html(html);
 
