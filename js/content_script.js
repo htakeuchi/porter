@@ -173,7 +173,7 @@ console.log(tree.tree('toJson'));
     g_textCountFlag = false;
 
     // show icon in address bar
-    chrome.extension.sendRequest({type: 'showIcon'}, function() {});
+    chrome.runtime.sendMessage({type: 'showIcon'}, function() {});
 
     $(document).ready(function(){
       injectCSS();
