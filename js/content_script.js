@@ -105,7 +105,7 @@
       if (option.bookmark_enable) {
         if (!option.bookmarks) {
 console.log('NO BOOKMARK');
-          bookmarks = [{ label: 'Bookmarks', id: 1234567, children: [
+          bookmarks = [{ label: 'WorkFlowy', id: 1234567, children: [
             { label: 'HOME', url: 'https://workflowy.com/#'}
           ]}];
         } else {
@@ -114,7 +114,9 @@ console.log('GET BOOKMARK ' + option.bookmarks);
         }
 console.log(bookmarks);
       // ツリーの構築
-        $('#keyboardShortcutHelper').html('<div id="bookmark_area"></div>');
+        var html = '<div class="title ui-dialog-titlebar ui-widget-header">Bookmarks</div><div id="bookmark_area"></div>';
+
+        $('#keyboardShortcutHelper').html(html);
         $('#bookmark_area').tree({
           dragAndDrop: true,
           autoOpen: 0,
@@ -125,7 +127,7 @@ console.log(bookmarks);
         $('#bookmark_area').bind('tree.click',
           function(event) {
             var node = event.node;
-            location.href = node.url;
+            if (typeof node.url !== "undefined") location.href = node.url;
           }
         );
         // ツリー移動時の処理
