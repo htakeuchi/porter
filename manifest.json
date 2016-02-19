@@ -18,11 +18,11 @@
     "matches": ["https://workflowy.com/*"],
     "js": [
       "js/jquery-2.2.0.min.js",
-      "js/jquery.treeview.js",
+      "js/tree.jquery.js",
       "js/content_script.js"
       ],
     "css": [
-      "css/jquery.treeview.css",
+      "css/jqtree.css",
       "css/content_script.css"
       ]
     }
@@ -31,7 +31,7 @@
   "permissions": [
     "activeTab",
     "storage",
-    "bookmarks"
+    "contextMenus"
   ],
 
   "page_action": {

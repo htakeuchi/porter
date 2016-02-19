@@ -100,20 +100,71 @@
 
   function replaceSideBar()
   {
-    chrome.storage.sync.get("bookmark_enable", function (option) {
+    var bookmarks;
+    chrome.storage.sync.get(["bookmark_enable", "bookmarks"], function (option) {
       if (option.bookmark_enable) {
-        chrome.extension.sendRequest({type: 'getBookmarks'}, function(contents) {
-          // Create Bookmark list
-          var sidebar = '<h3>Porter for WorkFlowy</h3>';
-          sidebar = sidebar.concat(contents.bookMarks);
-          $('#keyboardShortcutHelper').html(sidebar);
-          $('#keyboardShortcutHelper').addClass('bookmark');
-          $('#keyboardShortcutHelper h3').addClass('bookmarkHeading');
-          $('#browser').treeview();
+        if (!option.bookmarks) {
+console.log('NO BOOKMARK');
+          bookmarks = [{ label: 'Bookmarks', id: 1234567, children: [
+            { label: 'HOME', url: 'https://workflowy.com/#'}
+          ]}];
+        } else {
+console.log('GET BOOKMARK ' + option.bookmarks);
+          bookmarks = JSON.parse(option.bookmarks);
+        }
+console.log(bookmarks);
+      // ツリーの構築
+        $('#keyboardShortcutHelper').html('<div id="bookmark_area"></div>');
+        $('#bookmark_area').tree({
+          dragAndDrop: true,
+          autoOpen: 0,
+          keyboardSupport: false,
+          data: bookmarks
+        });
+        // ブックマーククリック時の処理
+        $('#bookmark_area').bind('tree.click',
+          function(event) {
+            var node = event.node;
+            location.href = node.url;
+          }
+        );
+        // ツリー移動時の処理
+        $('#bookmark_area').bind('tree.move', function(event) {
+  console.log('tree moved');
+        　setTimeout(function() {
+            var tree = $('#bookmark_area');
+            chrome.storage.sync.set({
+              'bookmarks': tree.tree('toJson')
+            });
+          }, 1000);
         });
       }
     });
   }
+
+  function getContent(callback) {
+    var content = elementsToArray(document.querySelector('div.selected'));
+    var url = location.href;
+    var title = document.title;
+    callback({content: content, url: url, title: title});
+  }
+
+  function addBookmark(url, title) {
+console.log("ADD BOOKMARK:" + url + title);
+    var tree = $('#bookmark_area');
+    var parent_node = tree.tree('getNodeById', 1234567);
+console.log(parent_node);
+    title = title.replace(/\s\-\sWorkFlowy$/, '');
+    tree.tree('appendNode', { label: title, url: url }, parent_node);
+
+console.log('save');
+console.log(tree.tree('toJson'));
+
+    chrome.storage.sync.set({
+      'bookmarks': tree.tree('toJson')
+    });
+  }
+
 
   function main() {
     g_textCountFlag = false;
@@ -130,11 +181,16 @@
       replaceSideBar();
     });
 
-    chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
-      var content = elementsToArray(document.querySelector('div.selected'));
-      var url = location.href;
-      var title = document.title;
-      sendResponse({content: content, url: url, title: title});
+    chrome.extension.onMessage.addListener(function(msg, sender, callback) {
+console.log(msg);
+      switch (msg.request) {
+        case 'gettopic':
+          getContent(callback);
+          break;
+        case 'bookmark':
+          addBookmark(msg.info.url, msg.info.title);
+          break;
+      };
     });
   }
   main();
