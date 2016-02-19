@@ -103,6 +103,7 @@
     var bookmarks;
     chrome.storage.sync.get(["bookmark_enable", "bookmarks"], function (option) {
       if (option.bookmark_enable) {
+        setCSS('#keyboardShortcutHelper {width: 300px;}');
         if (!option.bookmarks) {
 console.log('NO BOOKMARK');
           bookmarks = [{ label: 'WorkFlowy', id: 1234567, children: [
@@ -114,7 +115,7 @@ console.log('GET BOOKMARK ' + option.bookmarks);
         }
 console.log(bookmarks);
       // ツリーの構築
-        var html = '<div class="title ui-dialog-titlebar ui-widget-header">Bookmark</div><div id="bookmark_area"></div>';
+        var html = '<div class="title ui-dialog-titlebar ui-widget-header" style="width:">Bookmark</div><div id="bookmark_area"></div>';
 
         $('#keyboardShortcutHelper').html(html);
         $('#bookmark_area').tree({
