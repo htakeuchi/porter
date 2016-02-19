@@ -114,7 +114,7 @@ console.log('GET BOOKMARK ' + option.bookmarks);
         }
 console.log(bookmarks);
       // ツリーの構築
-        var html = '<div class="title ui-dialog-titlebar ui-widget-header">Bookmarks</div><div id="bookmark_area"></div>';
+        var html = '<div class="title ui-dialog-titlebar ui-widget-header">Bookmark</div><div id="bookmark_area"></div>';
 
         $('#keyboardShortcutHelper').html(html);
         $('#bookmark_area').tree({
