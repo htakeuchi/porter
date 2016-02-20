@@ -1,4 +1,3 @@
-/* global bookMarks */
 (function(global) {
   var g_timerID;
   var g_textCountFlag;
@@ -98,49 +97,124 @@
     return html;
   }
 
+  function getRootNode() {
+    var tree = $('#bookmark_area');
+    return {"tree": tree, "node": tree.tree('getNodeById', 1)};
+  }
+
+  function addBookmark(url, title) {
+console.log("ADD BOOKMARK:" + url + title);
+    var info = getRootNode();
+    title = title.replace(/\s\-\sWorkFlowy$/, '');
+    info.tree.tree('appendNode', { label: title, url: url }, info.node);
+    saveBookmark();
+  }
+
+  function addBookmarkFolder() {
+    var info = getRootNode();
+    var title = window.prompt("Input folder name", "");
+    if (typeof title === "undefined" || title == null) return;
+
+    info.tree.tree('appendNode', { label: title }, info.node);
+    saveBookmark();
+  }
+
+  function saveBookmark() {
+    setTimeout(function() {
+      var tree = $('#bookmark_area');
+      chrome.storage.sync.set({
+        'bookmarks': tree.tree('toJson')
+      });
+    }, 1000);
+  }
+
+  function getSelectedNode() {
+    var tree = $('#bookmark_area');
+    return tree.tree('getSelectedNode');
+  }
+
+  function deleteBookmark() {
+    var node = getSelectedNode();
+    if (!node) return;
+    if (window.confirm('Are you sure you want to delete it?')) {
+      $('#bookmark_area').tree('removeNode', node);
+      saveBookmark();
+    }
+  }
+
+  function editBookmark() {
+    var node = getSelectedNode();
+    if (!node) return;
+    var title = window.prompt("Edit title", node.name);
+    if (typeof title === "undefined" || title == null || title.length == 0) return;
+
+    var tree = $('#bookmark_area');
+    tree.tree('updateNode', node, title);
+    saveBookmark();
+  }
+
+  function getSidebarHtml() {
+    return '<div class="title ui-dialog-titlebar ui-widget-header"><span>Bookmark<br/>\
+    <a href="#" id="addFolderLink">[+Folder]</a>\
+    <a href="#" id="editLink">[Edit]</a>\
+    <a href="#" id="deleteLink"><span id="deleteSpan">[Delete]</span></a>\
+    </span></div>\
+    <div id="bookmark_area"></div>';
+  }
+
+  function setSidebarLister() {
+    $('#keyboardShortcutHelper').html(getSidebarHtml());
+    $('#addFolderLink').click(function() {addBookmarkFolder()});
+    $('#addFolderLink img').attr("src", 'chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/add_folder.png');
+
+    $('#editLink').click(function() {editBookmark()});
+    $('#editLink img').attr("src", 'chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/edit.png');
+
+    $('#deleteLink').click(function() {deleteBookmark()});
+    $('#deleteLink img').attr("src", 'chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/delete.png');
+  }
+
+  function buildSidebarTree(bookmarks) {
+    // Build Tree
+    var bookmarkArea = $('#bookmark_area');
+    bookmarkArea.tree({
+      dragAndDrop: true,
+      autoOpen: 0,
+      keyboardSupport: false,
+      data: bookmarks
+    });
+    // ブックマーククリック時の処理
+    bookmarkArea.bind('tree.click',
+      function(event) {
+        var node = event.node;
+        if (typeof node.url !== "undefined") location.href = node.url;
+      }
+    );
+    // ブックマーク削除の時の処理（削除）
+    bookmarkArea.bind('tree.dblclick',
+      function(event) {
+      }
+    );
+    // ツリー移動時の処理
+    bookmarkArea.bind('tree.move', function(event) {
+      saveBookmark();
+    });
+  }
+
   function replaceSideBar()
   {
-    var bookmarks;
+    var bookmarks = [];
     chrome.storage.sync.get(["bookmark_enable", "bookmarks"], function (option) {
       if (option.bookmark_enable) {
-        setCSS('#keyboardShortcutHelper {width: 300px;}');
+        setCSS('#keyboardShortcutHelper {width: 250px;}');
         if (!option.bookmarks) {
 console.log('NO BOOKMARK');
-          bookmarks = [{ label: 'WorkFlowy', id: 1234567, children: [
-            { label: 'HOME', url: 'https://workflowy.com/#'}
-          ]}];
         } else {
 console.log('GET BOOKMARK ' + option.bookmarks);
           bookmarks = JSON.parse(option.bookmarks);
         }
-console.log(bookmarks);
-      // ツリーの構築
-        var html = '<div class="title ui-dialog-titlebar ui-widget-header" style="width:">Bookmark</div><div id="bookmark_area"></div>';
-
-        $('#keyboardShortcutHelper').html(html);
-        $('#bookmark_area').tree({
-          dragAndDrop: true,
-          autoOpen: 0,
-          keyboardSupport: false,
-          data: bookmarks
-        });
-        // ブックマーククリック時の処理
-        $('#bookmark_area').bind('tree.click',
-          function(event) {
-            var node = event.node;
-            if (typeof node.url !== "undefined") location.href = node.url;
-          }
-        );
-        // ツリー移動時の処理
-        $('#bookmark_area').bind('tree.move', function(event) {
-  console.log('tree moved');
-        　setTimeout(function() {
-            var tree = $('#bookmark_area');
-            chrome.storage.sync.set({
-              'bookmarks': tree.tree('toJson')
-            });
-          }, 1000);
-        });
+        setSidebarLister();
+        buildSidebarTree(bookmarks);
       }
     });
   }
@@ -152,22 +226,28 @@ console.log(bookmarks);
     callback({content: content, url: url, title: title});
   }
 
-  function addBookmark(url, title) {
-console.log("ADD BOOKMARK:" + url + title);
-    var tree = $('#bookmark_area');
-    var parent_node = tree.tree('getNodeById', 1234567);
-console.log(parent_node);
-    title = title.replace(/\s\-\sWorkFlowy$/, '');
-    tree.tree('appendNode', { label: title, url: url }, parent_node);
-
-console.log('save');
-console.log(tree.tree('toJson'));
-
-    chrome.storage.sync.set({
-      'bookmarks': tree.tree('toJson')
-    });
+  // Open hisotry dialog (NOT USED)
+  function showHistory() {
+    $('#history-dialog').dialog('open');
   }
 
+  // NOT USED
+  function addDialog() {
+    var html = '<div id="history-dialog"><div class="dialog-content"></div></div>';
+    $("body").append(html);
+
+    $('#history-dialog').dialog({
+      autoOpen: false,
+      title: 'History',
+      closeOnEscape: true,
+      modal: true,
+      buttons: {
+        "CLOSE": function(){
+          $(this).dialog('close');
+        }
+      }
+    })
+  }
 
   function main() {
     g_textCountFlag = false;
@@ -177,11 +257,8 @@ console.log(tree.tree('toJson'));
 
     $(document).ready(function(){
       injectCSS();
-    });
-
-    $(window).load(function(){
-      addTextCounter();
       replaceSideBar();
+      addTextCounter();
     });
 
     chrome.extension.onMessage.addListener(function(msg, sender, callback) {

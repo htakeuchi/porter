@@ -18,6 +18,7 @@
     "matches": ["https://workflowy.com/*"],
     "js": [
       "js/jquery-2.2.0.min.js",
+      "js/jquery-ui.min.js",
       "js/tree.jquery.js",
       "js/content_script.js"
       ],
@@ -31,7 +32,7 @@
   "permissions": [
     "activeTab",
     "storage",
-    "history",
+    "tabs",
     "contextMenus"
   ],
 
@@ -45,7 +46,8 @@
   "web_accessible_resources": [
     "http://fonts.gstatic.com/*",
     "css/theme/*",
-    "image/treeview/*"
+    "css/images/*",
+    "image/*.png"
     ],
 
   "manifest_version": 2

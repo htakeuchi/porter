@@ -1,13 +1,44 @@
-.bookmark {
-  font-family: Meiryo, Sana, Calibri, Trebuchet, Verdana, sans-serif;
-  padding: 8px 4px 8px 4px;
+.ui-dialog {
+  z-index: 1000 !important ;
 }
 
-.bookmarkHeading {
-  border:1px solid #000;
-  padding:5px;
-  font-weight:bold;
-  font-size:14px;
-  background-color:#000;
-  color:#fff;
+#jqContextMenu {
+  font-size: 90%;
+  z-index: 2000 !important ;
 }
+
+
+.dialog-contents {
+/*
+  width:70%;
+  height: auto !important;
+  background-color: white;
+*/
+}
+
+#bookmark_area {
+  font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
+  padding-bottom: 1em;
+  line-height: 1.2em;
+  font-size: 90%
+}
+
+#addFolderLink, #editLink, #deleteLink {
+  font-size: 90%;
+  margin-right: 1em;
+}
+
+#deleteSpan {
+  text-align: right;
+}
+/*
+#addFolderLink:before {
+  content: url('chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/add_folder.png');
+}
+#editLink:before {
+  content: url('chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/edit.png');
+}
+#deleteLink:before {
+  content: url('chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/delete.png');
+}
+*/
