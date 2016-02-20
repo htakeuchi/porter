@@ -104,8 +104,7 @@
 
   function addBookmark(url, title) {
     if (typeof url === "undefined") url = location.href;
-    if (typeof title=== "undefined") title = document.title;
-
+    if (typeof title === "undefined") title = document.title;
     var info = getRootNode();
     title = title.replace(/\s\-\sWorkFlowy$/, '');
     info.tree.tree('appendNode', { label: title, url: url }, info.node);
