@@ -47,7 +47,6 @@
     "http://fonts.gstatic.com/*",
     "css/theme/*",
     "css/images/*",
-    "image/*.png"
     ],
 
   "manifest_version": 2

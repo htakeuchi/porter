@@ -103,6 +103,9 @@
   }
 
   function addBookmark(url, title) {
+    if (typeof url === "undefined") url = location.href;
+    if (typeof title=== "undefined") title = document.title;
+
 console.log("ADD BOOKMARK:" + url + title);
     var info = getRootNode();
     title = title.replace(/\s\-\sWorkFlowy$/, '');
@@ -154,7 +157,8 @@ console.log("ADD BOOKMARK:" + url + title);
   }
 
   function getSidebarHtml() {
-    return '<div class="title ui-dialog-titlebar ui-widget-header"><span>Bookmark<br/>\
+    return '<div class="title ui-dialog-titlebar ui-widget-header"><span>Bookmark<br/><br/>\
+    <a href="#" id="addBookmark">[&#9825;]</a>\
     <a href="#" id="addFolderLink">[+Folder]</a>\
     <a href="#" id="editLink">[Edit]</a>\
     <a href="#" id="deleteLink"><span id="deleteSpan">[Delete]</span></a>\
@@ -164,14 +168,10 @@ console.log("ADD BOOKMARK:" + url + title);
 
   function setSidebarLister() {
     $('#keyboardShortcutHelper').html(getSidebarHtml());
-    $('#addFolderLink').click(function() {addBookmarkFolder()});
-    $('#addFolderLink img').attr("src", 'chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/add_folder.png');
-
-    $('#editLink').click(function() {editBookmark()});
-    $('#editLink img').attr("src", 'chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/edit.png');
-
-    $('#deleteLink').click(function() {deleteBookmark()});
-    $('#deleteLink img').attr("src", 'chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/delete.png');
+    $('#addBookmark').click(function() {addBookmark(); return false});
+    $('#addFolderLink').click(function() {addBookmarkFolder(); return false});
+    $('#editLink').click(function() {editBookmark(); return false});
+    $('#deleteLink').click(function() {deleteBookmark(); return false});
   }
 
   function buildSidebarTree(bookmarks) {
@@ -183,19 +183,16 @@ console.log("ADD BOOKMARK:" + url + title);
       keyboardSupport: false,
       data: bookmarks
     });
-    // ブックマーククリック時の処理
     bookmarkArea.bind('tree.click',
       function(event) {
         var node = event.node;
         if (typeof node.url !== "undefined") location.href = node.url;
       }
     );
-    // ブックマーク削除の時の処理（削除）
     bookmarkArea.bind('tree.dblclick',
       function(event) {
       }
     );
-    // ツリー移動時の処理
     bookmarkArea.bind('tree.move', function(event) {
       saveBookmark();
     });
