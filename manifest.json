@@ -1,7 +1,7 @@
 {
   "name": "Porter for WorkFlowy",
   "version": "1.3",
-  "description": "Exports WorkFlowy's outlines to Markdown and HTML. Other some useful features.",
+  "description": "__MSG_Manifestdesc__",
   "icons" : {
     "16": "image/icon16.png",
     "48": "image/icon48.png",
@@ -13,6 +13,8 @@
       "js/background.js"
     ]
   },
+
+  "default_locale": "en",
 
   "content_scripts": [ {
     "matches": ["https://workflowy.com/*"],

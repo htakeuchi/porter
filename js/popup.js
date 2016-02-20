@@ -195,18 +195,17 @@
   }
 
   function main() {
-    var port = chrome.extension.connect({ name: "Background" });
-    port.onMessage.addListener(function(response) {
-      g_nodes = response.content;
-      g_title = response.title;
-      g_url = response.url;
-      changeFormat('markdown');
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {request: 'getTopic'}, function(response) {
+        g_nodes = response.content;
+        g_title = response.title;
+        g_url = response.url;
+        changeFormat('markdown');
+      });
     });
-
-    port.postMessage();
     setEventListers();
     textarea_select();
-  };
+  }
 
   window.onload = main;
 }());

@@ -1,0 +1,80 @@
+{
+  "Addtobookmark": {
+    "message": "Add this topic to bookmark"
+  },
+  "Apply": {
+    "message": "Apply"
+  },
+  "ApplyMessage": {
+    "message": "Applied! ***Please reload*** the tab of WorkFlowy."
+  },
+  "Basetheme": {
+    "message": "Base Theme"
+  },
+  "Bookmark": {
+    "message": "Bookmark"
+  },
+  "Bookmarkwidth": {
+    "message": "Bookmark width"
+  },
+  "Close": {
+    "message": "Close"
+  },
+  "ConfirmDelete": {
+    "message": "Are you sure you want to delete it?"
+  },
+  "Delete": {
+    "message": "[Delete]"
+  },
+  "Edit": {
+    "message": "[Edit]"
+  },
+  "Editor": {
+    "message": "Editor"
+  },
+  "Edittitle": {
+    "message": "Edit title"
+  },
+  "Enablebookmark": {
+    "message": "Enable Bookmark (Replace WorkFlowy's help bar to the original bookmark bar)"
+  },
+  "Enabletheme": {
+    "message": "Enable Theme"
+  },
+  "Folder": {
+    "message": "[+Folder]"
+  },
+  "Format": {
+    "message": "Format"
+  },
+  "General": {
+    "message": "General"
+  },
+  "Inputfoldername": {
+    "message": "Input folder name"
+  },
+  "Manifestdesc": {
+    "message": "Extends WorkFlowy. Export to Markdown and HTML, Theme, Count letters, and more useful features."
+  },
+  "Middle": {
+    "message": "Middle"
+  },
+  "Narrow": {
+    "message": "Narrow"
+  },
+  "Opennewwindow": {
+    "message": "Open this topic in new window"
+  },
+  "Option": {
+    "message": "Option"
+  },
+  "Outputnotes": {
+    "message": "Output notes"
+  },
+  "Preview": {
+    "message": "Preview"
+  },
+  "Wide": {
+    "message": "Wide"
+  }
+}

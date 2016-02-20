@@ -6,12 +6,12 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <div class="panel panel-info">
+    <div class="panel panel-info" style="width: 500px; margin-bottom:0; padding-bottom:0">
       <div class="panel-heading">
         <h3 class="panel-title" id="popupTitle">Porter for WorkFlowy</h3>
       </div>
 
-      <div class="panel-body" style="margin-bottom: 0; padding-bottom: 0;">
+      <div class="panel-body">
         <form>
           <div class="form-group">
             <textarea class="form-control" id="textArea" rows="10">
@@ -22,7 +22,7 @@
             <table class="table">
               <tr>
               <tr>
-                <th>Format</th>
+                <th class="locale Format">Format</th>
                 <td>
                   <label class="radio-inline">
                     <input checked type="radio" name="formatOptions" id="markDown" value="markdown" checked> Markdown
@@ -34,22 +34,23 @@
               </tr>
 
               <tr>
-                <th>Options</th>
+                <th class="locale Option">Option</th>
                 <td>
                   <label>
-                    <input type="checkbox" id="outputNotes"> <span style="font-weight: normal;">Output Notes</span>
+                    <input type="checkbox" id="outputNotes"> <span class="locale Outputnotes" style="font-weight: normal;">Output notes</span>
                   </label>
                 </td>
               </tr>
             </table>
-            <button id="previewButton" type="button" class="btn btn-info">Preview</button>
-            <button id="close" type="button" class="btn btn-default pull-right">Close</button>
+            <button id="previewButton" type="button" class="btn btn-info"><span class="locale Preview">Preview</span></button>
+            <button id="close" type="button" class="btn btn-default pull-right"><span class="locale Close">Close</span></button>
           </div>
         </form>
       </div>
     </div>
     <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="js/marked.min.js"></script>
-    <script type="text/javascript" src="js/popup.js" async=""></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/locale.js"></script>
   </body>
 </html>

@@ -35,7 +35,7 @@
 
   function save() {
     $('#alert').css('display','block');
-    setTimeout(function() {$('#alert').fadeOut();}, 3000);
+    setTimeout(function() {$('#alert').fadeOut();}, 10000);
 
     chrome.storage.sync.set({
       'custom_css': g_editor.getValue(),

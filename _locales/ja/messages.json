@@ -1,0 +1,80 @@
+{
+  "Addtobookmark": {
+    "message": "表示しているトピックをブックマークへ追加する"
+  },
+  "Apply": {
+    "message": "適用"
+  },
+  "ApplyMessage": {
+    "message": "適用されました!　WorkFlowyのタブを「再読み込み」してください"
+  },
+  "Basetheme": {
+    "message": "テーマ"
+  },
+  "Bookmark": {
+    "message": "ブックマーク"
+  },
+  "Bookmarkwidth": {
+    "message": "ブックマークバーの幅"
+  },
+  "Close": {
+    "message": "閉じる"
+  },
+  "ConfirmDelete": {
+    "message": "本当に削除しますか？"
+  },
+  "Delete": {
+    "message": "[削除]"
+  },
+  "Edit": {
+    "message": "[編集]"
+  },
+  "Editor": {
+    "message": "エディタを表示"
+  },
+  "Edittitle": {
+    "message": "タイトルを編集してください"
+  },
+  "Enablebookmark": {
+    "message": "ブックマークを有効にする（WorkFlowyのヘルプバーを置き換えます）"
+  },
+  "Enabletheme": {
+    "message": "テーマを有効にする"
+  },
+  "Folder": {
+    "message": "[+Folder]"
+  },
+  "Format": {
+    "message": "フォーマット"
+  },
+  "General": {
+    "message": "一般"
+  },
+  "Inputfoldername": {
+    "message": "フォルダ名を入力してください"
+  },
+  "Manifestdesc": {
+    "message": "トピックのMarkdown/HTML出力や、見た目を変えるテーマ機能、文字数カウンタなどWorkFlowyをパワーアップするChrome拡張です。"
+  },
+  "Middle": {
+    "message": "中間"
+  },
+  "Narrow": {
+    "message": "狭い"
+  },
+  "Opennewwindow": {
+    "message": "表示しているトピックを新しいウィンドウで開く"
+  },
+  "Option": {
+    "message": "オプション"
+  },
+  "Outputnotes": {
+    "message": "ノートを出力する"
+  },
+  "Preview": {
+    "message": "プレビュー"
+  },
+  "Wide": {
+    "message": "広い"
+  }
+}

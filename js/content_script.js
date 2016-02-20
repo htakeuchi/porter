@@ -114,7 +114,7 @@
 
   function addBookmarkFolder() {
     var info = getRootNode();
-    var title = window.prompt("Input folder name", "");
+    var title = window.prompt(chrome.i18n.getMessage('Inputfoldername'), "");
     if (typeof title === "undefined" || title == null) return;
 
     info.tree.tree('appendNode', { label: title }, info.node);
@@ -138,7 +138,7 @@
   function deleteBookmark() {
     var node = getSelectedNode();
     if (!node) return;
-    if (window.confirm('Are you sure you want to delete it?')) {
+    if (window.confirm(chrome.i18n.getMessage('ConfirmDelete'))) {
       $('#bookmark_area').tree('removeNode', node);
       saveBookmark();
     }
@@ -147,7 +147,7 @@
   function editBookmark() {
     var node = getSelectedNode();
     if (!node) return;
-    var title = window.prompt("Edit title", node.name);
+    var title = window.prompt(chrome.i18n.getMessage('Edittitle'), node.name);
     if (typeof title === "undefined" || title == null || title.length == 0) return;
 
     var tree = $('#bookmark_area');
@@ -156,11 +156,15 @@
   }
 
   function getSidebarHtml() {
-    return '<div class="title ui-dialog-titlebar ui-widget-header"><span>Bookmark<br/><br/>\
+    var m1 = chrome.i18n.getMessage('Folder');
+    var m2 = chrome.i18n.getMessage('Edit');
+    var m3 = chrome.i18n.getMessage('Delete');
+    return '<div class="title ui-dialog-titlebar ui-widget-header">\
+    <span>' + chrome.i18n.getMessage('Bookmark') + '<br/>\
     <a href="#" id="addBookmark">&#9825;</a>\
-    <a href="#" id="addFolderLink">[+Folder]</a>\
-    <a href="#" id="editLink">[Edit]</a>\
-    <a href="#" id="deleteLink"><span id="deleteSpan">[Delete]</span></a>\
+    <a href="#" id="addFolderLink">' + chrome.i18n.getMessage('Folder') + '</a>\
+    <a href="#" id="editLink">' + chrome.i18n.getMessage('Edit') + '</a>\
+    <a href="#" id="deleteLink"><span id="deleteSpan">' + chrome.i18n.getMessage('Delete')  + '</span></a>\
     </span></div>\
     <div id="bookmark_area"></div>';
   }
@@ -202,11 +206,9 @@
     var bookmarks = [];
     chrome.storage.sync.get(["bookmark_enable", "bookmarks"], function (option) {
       if (option.bookmark_enable) {
-        setCSS('#keyboardShortcutHelper {width: 250px;}');
+//        setCSS('#keyboardShortcutHelper {width: 250px;}');
         if (!option.bookmarks) {
-console.log('NO BOOKMARK');
         } else {
-console.log('GET BOOKMARK ' + option.bookmarks);
           bookmarks = JSON.parse(option.bookmarks);
         }
         setSidebarLister();
@@ -222,29 +224,6 @@ console.log('GET BOOKMARK ' + option.bookmarks);
     callback({content: content, url: url, title: title});
   }
 
-  // Open hisotry dialog (NOT USED)
-  function showHistory() {
-    $('#history-dialog').dialog('open');
-  }
-
-  // NOT USED
-  function addDialog() {
-    var html = '<div id="history-dialog"><div class="dialog-content"></div></div>';
-    $("body").append(html);
-
-    $('#history-dialog').dialog({
-      autoOpen: false,
-      title: 'History',
-      closeOnEscape: true,
-      modal: true,
-      buttons: {
-        "CLOSE": function(){
-          $(this).dialog('close');
-        }
-      }
-    })
-  }
-
   function main() {
     g_textCountFlag = false;
 
@@ -258,9 +237,8 @@ console.log('GET BOOKMARK ' + option.bookmarks);
     });
 
     chrome.extension.onMessage.addListener(function(msg, sender, callback) {
-console.log(msg);
       switch (msg.request) {
-        case 'gettopic':
+        case 'getTopic':
           getContent(callback);
           break;
         case 'bookmark':
