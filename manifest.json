@@ -46,7 +46,7 @@
   "web_accessible_resources": [
     "http://fonts.gstatic.com/*",
     "css/theme/*",
-    "css/images/*",
+    "css/images/*"
     ],
 
   "manifest_version": 2

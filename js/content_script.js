@@ -106,7 +106,6 @@
     if (typeof url === "undefined") url = location.href;
     if (typeof title=== "undefined") title = document.title;
 
-console.log("ADD BOOKMARK:" + url + title);
     var info = getRootNode();
     title = title.replace(/\s\-\sWorkFlowy$/, '');
     info.tree.tree('appendNode', { label: title, url: url }, info.node);
@@ -158,7 +157,7 @@ console.log("ADD BOOKMARK:" + url + title);
 
   function getSidebarHtml() {
     return '<div class="title ui-dialog-titlebar ui-widget-header"><span>Bookmark<br/><br/>\
-    <a href="#" id="addBookmark">[&#9825;]</a>\
+    <a href="#" id="addBookmark">&#9825;</a>\
     <a href="#" id="addFolderLink">[+Folder]</a>\
     <a href="#" id="editLink">[Edit]</a>\
     <a href="#" id="deleteLink"><span id="deleteSpan">[Delete]</span></a>\

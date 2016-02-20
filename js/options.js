@@ -1,5 +1,5 @@
 (function() {
-  var editor;
+  var g_editor;
   var current_theme;
   var theme_css;
 
@@ -38,7 +38,7 @@
     setTimeout(function() {$('#alert').fadeOut();}, 3000);
 
     chrome.storage.sync.set({
-      'custom_css': editor.getValue(),
+      'custom_css': g_editor.getValue(),
       'theme': current_theme,
       'theme_css': theme_css,
       'theme_enable': document.getElementById('themeEnable').checked,
@@ -64,7 +64,7 @@
         theme_css = option.theme_css;
 
         // Aditional CSS
-        editor.setValue(option.custom_css);
+        g_editor.setValue(option.custom_css);
 
         // Enable Bookmark
         document.getElementById('bookmarkEnable').checked = option.bookmark_enable;
@@ -97,13 +97,19 @@
   function main() {
 console.log($(".applyButton"));
 
-    document.getElementById("apply1").addEventListener("click",  function() { save(); }, false);
-    document.getElementById("apply2").addEventListener("click",  function() { save(); }, false);
-    document.getElementById("themeEnable").addEventListener("click",  function() { toggle_theme_enable(); }, false);
-    document.getElementById("themeSelect").addEventListener("change",  function() { change_theme(); }, false);
+//    document.getElementById("apply").addEventListener("click",  function() { save(); }, false);
+    $('#apply').click(function() {save(); return false});
+
+//    document.getElementById("themeEnable").addEventListener("click",  function() { toggle_theme_enable(); }, false);
+    $('#themeEnable').click(function() {toggle_theme_enable(); return false});
+
+//    document.getElementById("themeSelect").addEventListener("change",  function() { change_theme(); }, false);
+    $('#themeSelect').change(function() {change_theme(); return false});
+
+    $('#editorLink').click(function() {$('#editorArea').show(); g_editor.refresh(); g_editor.focus(); return false});
 
     var textArea = document.getElementById("textArea");
-    editor = CodeMirror.fromTextArea(textArea, {
+    g_editor = CodeMirror.fromTextArea(textArea, {
       mode: "css",
       value: "",
       lineNumbers: true,
