@@ -7,18 +7,12 @@
   z-index: 2000 !important ;
 }
 
-
-.dialog-contents {
-/*
-  width:70%;
-  height: auto !important;
-  background-color: white;
-*/
-}
-
-#bookmark_area {
+div#bookmark_area {
   font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
   line-height: 1.3em;
+  padding: 0.3em;
+  padding-top: 0.5em;
+  padding-bottom: 1em;
 }
 
 #addBookmark, #addFolderLink, #editLink, #deleteLink {
@@ -29,14 +23,3 @@
 #deleteSpan {
   text-align: right;
 }
-/*
-#addFolderLink:before {
-  content: url('chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/add_folder.png');
-}
-#editLink:before {
-  content: url('chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/edit.png');
-}
-#deleteLink:before {
-  content: url('chrome-extension://gbppbgooenjbecamnjegjlccbibfbhab/image/delete.png');
-}
-*/

@@ -25,7 +25,7 @@
       "js/content_script.js"
       ],
     "css": [
-      "css/jqtree.css",
+      "css/jqtree.style.css",
       "css/content_script.css"
       ]
     }
