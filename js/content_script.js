@@ -203,9 +203,11 @@
   function replaceSideBar()
   {
     var bookmarks = [];
-    chrome.storage.sync.get(["bookmark_enable", "bookmarks"], function (option) {
+    chrome.storage.sync.get(["bookmark_enable", "bookmarks", "bookmark_width"], function (option) {
       if (option.bookmark_enable) {
-//        setCSS('#keyboardShortcutHelper {width: 250px;}');
+        var width = option.bookmark_width == "wideRadio" ? '{width: 370px}' : '{width: 270px}';
+        setCSS('#keyboardShortcutHelper' + width);
+
         if (!option.bookmarks) {
         } else {
           bookmarks = JSON.parse(option.bookmarks);
