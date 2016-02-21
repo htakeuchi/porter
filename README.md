@@ -48,6 +48,7 @@ Release Notes
 - Create a table of contents at the time of HTML export
 - Open the topic that you are referred to in the another new window
 - Redesign the option dialog
+- i18n (English, Japanese)
 
 ### 1.2 - 09 Feb 2016
 - Overwrite custom CSS to the built-in theme
