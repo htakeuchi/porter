@@ -2,6 +2,7 @@
   var g_nodes = null;
   var g_current_format = 'markdown';
   var g_output_notes = false;
+  var g_output_toc = false;
   var g_title, g_url;
 
   var TABLE_REGEXP = /^\|/;
@@ -11,6 +12,7 @@
   // change option
   function changeOption(type) {
     g_output_notes = document.getElementById("outputNotes").checked;
+    g_output_toc = document.getElementById("outputToc").checked;
     changeFormat(g_current_format);
   };
 
@@ -150,17 +152,37 @@
   function toHtml()
   {
     var renderer = new marked.Renderer();
-    renderer.heading = function (text, level, raw) {
-      return '<h'
-        + level
-        + '>'
-        + text
-        + '</h'
-        + level
-        + '>\n';
+
+    renderer.heading = function (text, level) {
+//      var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+      var escapedText = text.toLowerCase().replace(/¥s/g, '-');
+      return '<h' + level + '><a name="' +
+                    escapedText +
+                     '" class="anchor" href="#' +
+                     escapedText +
+                     '"><span class="header-link"></span></a>' +
+                      text + '</h' + level + '>\n';
     };
-    return marked(toMarkdown(), { renderer: renderer });
+
+    var html = marked(toMarkdown(), { renderer: renderer });
+    return g_output_toc ? toc(html) + html : html;
   };
+
+  // <h2><a name="memo" class="anchor" href="#memo"><span class="header-link"></span></a>MEMO</h2>
+  function toc(html) {
+    var toc = '';
+    var headings = html.match(/<h[2-5]>.+?<\/h[2-5]>/g);
+    if (!headings || headings.length == 0) return toc;
+
+    for (var i=0; i<headings.length; i++) {
+      var level = headings[i].match(/<h(\d)>/)[1] - 1;
+      var href = headings[i].match(/href="([^"]+?)"/)[1];
+      var title = headings[i].match(/>([^<]+?)<\/h/)[1];
+      title = (!title || title.length == 0) ? "Heading(Empty)" : title;
+      toc = toc + new Array(level).join('\t') + '1. <a href="' + href + '">' + title + '</a>\n';
+    }
+    return marked(toc);
+  }
 
   function textarea_select() {
     var t = document.getElementById('textArea');
@@ -174,13 +196,14 @@
     document.getElementById("markDown").addEventListener("click",  function() { changeFormat('markdown'); }, false);
     document.getElementById("html").addEventListener("click",  function() { changeFormat('html'); }, false);
     document.getElementById("outputNotes").addEventListener("click",  function() { changeOption('notes'); }, false);
-    document.getElementById("previewButton").addEventListener("click",  function() { preview(); }, false);
+    document.getElementById("outputToc").addEventListener("click",  function() { changeOption('toc'); }, false);
   }
 
   function makeTitleLabel(format, title, url) {
     return (format == "markdown") ? '[' + title + '](' + url + ')' : title + ' - ' + url;
   }
 
+  // not use
   function preview() {
     var img = '<img src="' + chrome.extension.getURL('image/space.gif') + '" width="800" height="1" alt="">';
     var html = '<div id="content">' + img + toHtml() + '</div>';

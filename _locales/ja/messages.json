@@ -17,6 +17,9 @@
   "Bookmarkwidth": {
     "message": "ブックマークバーの幅"
   },
+  "Clicktocount": {
+    "message": "文字数カウント"
+  },
   "Close": {
     "message": "閉じる"
   },
@@ -73,6 +76,9 @@
   },
   "Outputnotes": {
     "message": "ノートを出力する"
+  },
+  "Outputtoc": {
+    "message": "目次を出力する(HTMLのみ)"
   },
   "Theme": {
     "message": "テーマ"

@@ -13,7 +13,6 @@
     // send message to content script
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {request: request, info: info}, function(response) {
-console.log('callback background: ' + response);
       });
     });
   }

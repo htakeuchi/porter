@@ -17,6 +17,9 @@
   "Bookmarkwidth": {
     "message": "Bookmark width"
   },
+  "Clicktocount": {
+    "message": "Click to count"
+  },
   "Close": {
     "message": "Close"
   },
@@ -73,6 +76,9 @@
   },
   "Outputnotes": {
     "message": "Output notes"
+  },
+  "Outputtoc": {
+    "message": "Output TOC(HTML Only)"
   },
   "Preview": {
     "message": "Preview"

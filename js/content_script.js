@@ -1,7 +1,7 @@
 (function(global) {
   var g_timerID;
   var g_textCountFlag;
-  var g_CounterMsg = 'Click to count';
+  var g_CounterMsg = chrome.i18n.getMessage('Clicktocount');
 
   function elementsToArray(node) {
     var list = [];
@@ -114,7 +114,7 @@
   function addBookmarkFolder() {
     var info = getRootNode();
     var title = window.prompt(chrome.i18n.getMessage('Inputfoldername'), "");
-    if (typeof title === "undefined" || title == null) return;
+    if (typeof title === "undefined" || title == null || title.length == 0) return;
 
     info.tree.tree('appendNode', { label: title }, info.node);
     saveBookmark();
