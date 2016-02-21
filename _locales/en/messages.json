@@ -23,6 +23,9 @@
   "ConfirmDelete": {
     "message": "Are you sure you want to delete it?"
   },
+  "Customcss": {
+    "message": "Addtional CSS"
+  },
   "Delete": {
     "message": "[Delete]"
   },
@@ -30,7 +33,7 @@
     "message": "[Edit]"
   },
   "Editor": {
-    "message": "Editor"
+    "message": "(Show Editor)"
   },
   "Edittitle": {
     "message": "Edit title"
@@ -73,6 +76,9 @@
   },
   "Preview": {
     "message": "Preview"
+  },
+  "Theme": {
+    "message": "Theme"
   },
   "Wide": {
     "message": "Wide"

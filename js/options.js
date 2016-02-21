@@ -1,7 +1,6 @@
 (function() {
   var g_editor;
   var g_current_theme;
-  var g_theme_css;
 
   var themes = [
     {'label': 'Porter theme for WorkFlowy by \htakeuchi',
@@ -40,7 +39,6 @@
     chrome.storage.sync.set({
       'custom_css': g_editor.getValue(),
       'theme': g_current_theme,
-      'theme_css': g_theme_css,
       'theme_enable': document.getElementById('themeEnable').checked,
       'bookmark_enable': document.getElementById('bookmarkEnable').checked,
       'bookmark_width': $("input[name='bookmakrWidth']:checked").val()
@@ -49,7 +47,7 @@
 
   function load() {
     chrome.storage.sync.get([
-      "theme_enable", "theme", "theme_css", "custom_css",
+      "theme_enable", "theme", "custom_css",
       "bookmark_enable", "bookmark_width"
       ],
       function (option) {
@@ -61,9 +59,6 @@
         g_current_theme = option.theme;
         setThemeList();
         change_theme();
-
-        // Theme CSS
-        g_theme_css = option.theme_css;
 
         // Aditional CSS
         g_editor.setValue(option.custom_css);
@@ -99,10 +94,15 @@
   }
 
   function main() {
-
     document.getElementById("apply").addEventListener("click",  function() { save(); }, false);
     document.getElementById("themeEnable").addEventListener("click",  function() { toggle_theme_enable(); }, false);
     document.getElementById("themeSelect").addEventListener("change",  function() { change_theme(); }, false);
+    document.getElementById("showThemeEditor").addEventListener("click",  function() {
+      $('#editorArea').css('display', 'block');
+      $('#showThemeEditor').css('display', 'none');
+      g_editor.refresh();
+      $('#textArea').focus();
+    }, false);
 
     var textArea = document.getElementById("textArea");
     g_editor = CodeMirror.fromTextArea(textArea, {

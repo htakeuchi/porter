@@ -23,6 +23,9 @@
   "ConfirmDelete": {
     "message": "本当に削除しますか？"
   },
+  "Customcss": {
+    "message": "追加するCSS"
+  },
   "Delete": {
     "message": "[削除]"
   },
@@ -30,7 +33,7 @@
     "message": "[編集]"
   },
   "Editor": {
-    "message": "エディタを表示"
+    "message": "(エディタを表示)"
   },
   "Edittitle": {
     "message": "タイトルを編集してください"
@@ -70,6 +73,9 @@
   },
   "Outputnotes": {
     "message": "ノートを出力する"
+  },
+  "Theme": {
+    "message": "テーマ"
   },
   "Preview": {
     "message": "プレビュー"
