@@ -1,17 +1,41 @@
 (function() {
-  // show extension icon on address bar
-  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    chrome.pageAction.show(sender.tab.id);
-    sendResponse();
-  });
+  var SEARCH_STRING = "https://workflowy.com/#/";
 
-  chrome.extension.onConnect.addListener(function(port) {
-    port.onMessage.addListener(function(request) {
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {}, function(response) {
-          port.postMessage(response);
-        });
+  // A generic onclick callback function.
+  function genericOnClick(info, tab) {
+    var request = info.menuItemId;
+    var info = {"title": tab.title, "url": tab.url }
+
+    if (request == "newWindow") {
+      chrome.windows.create({"url": tab.url, "type": "popup", "state": "docked"});
+      return;
+    }
+    // send message to content script
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {request: request, info: info}, function(response) {
       });
     });
+  }
+
+  function createContextMenu() {
+    var parent = chrome.contextMenus.create(
+      {"title": "Porter for WorkFlowy", "documentUrlPatterns": ["https://workflowy.com/*"], "contexts": ["all"]});
+    var m0 = chrome.contextMenus.create(
+      {"title": chrome.i18n.getMessage('Opennewwindow'), "id": "newWindow", "parentId": parent, "contexts": ["all"], "onclick": genericOnClick});
+//    var m3 = chrome.contextMenus.create(
+//      {"title": "Export", "id": "export", "parentId": parent, "contexts": ["all"], "onclick": genericOnClick});
+    var s1 = chrome.contextMenus.create(
+      {"type": "separator", "parentId": parent, "contexts": ["all"], "onclick": genericOnClick});
+    var m1 = chrome.contextMenus.create(
+      {"title": chrome.i18n.getMessage('Addtobookmark'), "id": "bookmark", "parentId": parent, "contexts": ["all"], "onclick": genericOnClick});
+  }
+
+  createContextMenu();
+
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.type == 'showIcon') {
+      chrome.pageAction.show(sender.tab.id);
+    }
   });
+
 }());

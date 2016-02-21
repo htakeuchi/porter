@@ -1,8 +1,7 @@
 (function(global) {
   var g_timerID;
   var g_textCountFlag;
-  var g_CounterMsg = 'Click to count';
-  var g_sideBar;
+  var g_CounterMsg = chrome.i18n.getMessage('Clicktocount');
 
   function elementsToArray(node) {
     var list = [];
@@ -88,53 +87,165 @@
     $('#textCounter').html(html);
   }
 
-  function addSideBar() {
-    $('body').append('\
-    <div id="dialog" title="Quick Access">\
-      <ul>\
-      <li><a href="#">Home</a></li>\
-      <li><a href="#">Home 2</a></li>\
-      <li><a href="#">Home 3</a></li>\
-      <li><a href="#">Home 4</a></li>\
-      <li><a href="#">Home 5</a></li>\
-      <li><a href="#">Home 6</a></li>\
-      <li><a href="#">Home 7</a></li>\
-      <li><a href="#">Home 8</a></li>\
-      <li><a href="#">Home 9</a></li>\
-      <li><a href="#">Home 10</a></li>\
-      </ul>\
-    </div>');
+  function getHtml(list){
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+      var url = list[i].url;
+      var title = list[i].title.replace(/ - WorkFlowy$/, '');
+      html = html.concat('<li><a href="' + url + '">' + title + '</a></li>');
+    }
+    return html;
+  }
 
-    g_sideBar = $( "#dialog" ).dialog({
-      height: 'auto',
-      width : 300,
-      position: {
-        of : window,
-        at: 'right top',
-        my: 'right top'
+  function getRootNode() {
+    var tree = $('#bookmark_area');
+    return {"tree": tree, "node": tree.tree('getNodeById', 1)};
+  }
+
+  function addBookmark(url, title) {
+    if (typeof url === "undefined") url = location.href;
+    if (typeof title === "undefined") title = document.title;
+    var info = getRootNode();
+    title = title.replace(/\s\-\sWorkFlowy$/, '');
+    info.tree.tree('appendNode', { label: title, url: url }, info.node);
+    saveBookmark();
+  }
+
+  function addBookmarkFolder() {
+    var info = getRootNode();
+    var title = window.prompt(chrome.i18n.getMessage('Inputfoldername'), "");
+    if (typeof title === "undefined" || title == null || title.length == 0) return;
+
+    info.tree.tree('appendNode', { label: title }, info.node);
+    saveBookmark();
+  }
+
+  function saveBookmark() {
+    setTimeout(function() {
+      var tree = $('#bookmark_area');
+      chrome.storage.sync.set({
+        'bookmarks': tree.tree('toJson')
+      });
+    }, 1000);
+  }
+
+  function getSelectedNode() {
+    var tree = $('#bookmark_area');
+    return tree.tree('getSelectedNode');
+  }
+
+  function deleteBookmark() {
+    var node = getSelectedNode();
+    if (!node) return;
+    if (window.confirm(chrome.i18n.getMessage('ConfirmDelete'))) {
+      $('#bookmark_area').tree('removeNode', node);
+      saveBookmark();
+    }
+  }
+
+  function editBookmark() {
+    var node = getSelectedNode();
+    if (!node) return;
+    var title = window.prompt(chrome.i18n.getMessage('Edittitle'), node.name);
+    if (typeof title === "undefined" || title == null || title.length == 0) return;
+
+    var tree = $('#bookmark_area');
+    tree.tree('updateNode', node, title);
+    saveBookmark();
+  }
+
+  function getSidebarHtml() {
+    var m1 = chrome.i18n.getMessage('Folder');
+    var m2 = chrome.i18n.getMessage('Edit');
+    var m3 = chrome.i18n.getMessage('Delete');
+    return '<div class="title ui-dialog-titlebar ui-widget-header">\
+    <span>' + chrome.i18n.getMessage('Bookmark') + '<br/>\
+    <a href="#" id="addBookmark">&#9825;</a>\
+    <a href="#" id="addFolderLink">' + chrome.i18n.getMessage('Folder') + '</a>\
+    <a href="#" id="editLink">' + chrome.i18n.getMessage('Edit') + '</a>\
+    <a href="#" id="deleteLink"><span id="deleteSpan">' + chrome.i18n.getMessage('Delete')  + '</span></a>\
+    </span></div>\
+    <div id="bookmark_area"></div>';
+  }
+
+  function setSidebarLister() {
+    $('#keyboardShortcutHelper').html(getSidebarHtml());
+    $('#addBookmark').click(function() {addBookmark(); return false});
+    $('#addFolderLink').click(function() {addBookmarkFolder(); return false});
+    $('#editLink').click(function() {editBookmark(); return false});
+    $('#deleteLink').click(function() {deleteBookmark(); return false});
+  }
+
+  function buildSidebarTree(bookmarks) {
+    // Build Tree
+    var bookmarkArea = $('#bookmark_area');
+    bookmarkArea.tree({
+      dragAndDrop: true,
+      autoOpen: 0,
+      keyboardSupport: false,
+      data: bookmarks
+    });
+    bookmarkArea.bind('tree.click',
+      function(event) {
+        var node = event.node;
+        if (typeof node.url !== "undefined") location.href = node.url;
+      }
+    );
+    bookmarkArea.bind('tree.dblclick',
+      function(event) {
+      }
+    );
+    bookmarkArea.bind('tree.move', function(event) {
+      saveBookmark();
+    });
+  }
+
+  function replaceSideBar()
+  {
+    var bookmarks = [];
+    chrome.storage.sync.get(["bookmark_enable", "bookmarks", "bookmark_width"], function (option) {
+      if (option.bookmark_enable) {
+        var width = option.bookmark_width == "wideRadio" ? '{width: 370px}' : '{width: 270px}';
+        setCSS('#keyboardShortcutHelper' + width);
+
+        if (!option.bookmarks) {
+        } else {
+          bookmarks = JSON.parse(option.bookmarks);
+        }
+        setSidebarLister();
+        buildSidebarTree(bookmarks);
       }
     });
-    g_sideBar.parent().css({position: 'fixed'})
+  }
+
+  function getContent(callback) {
+    var content = elementsToArray(document.querySelector('div.selected'));
+    var url = location.href;
+    var title = document.title;
+    callback({content: content, url: url, title: title});
   }
 
   function main() {
     g_textCountFlag = false;
+
     // show icon in address bar
-    chrome.extension.sendRequest({}, function(res) {});
+    chrome.runtime.sendMessage({type: 'showIcon'}, function() {});
 
     $(document).ready(function(){
       injectCSS();
-    });
-
-    $(window).load(function(){
+      replaceSideBar();
       addTextCounter();
     });
 
-    chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
-      var content = elementsToArray(document.querySelector('div.selected'));
-      var url = location.href;
-      var title = document.title;
-      sendResponse({content: content, url: url, title: title});
+    chrome.extension.onMessage.addListener(function(msg, sender, callback) {
+      switch (msg.request) {
+        case 'getTopic':
+          getContent(callback);
+          break;
+        case 'bookmark':
+          addBookmark(msg.info.url, msg.info.title);
+          break;
+      };
     });
   }
   main();

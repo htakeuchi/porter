@@ -1,0 +1,111 @@
+html, body {
+        padding:1em;
+        background:#fefefe;
+  }
+body {
+  font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
+  color: #333;
+  line-height: 1.4;
+  text-align: justify;
+  }
+
+
+div.content {
+  width: 99px;
+}
+
+/* Typography
+-------------------------------------------------------- */
+
+h1 {
+  margin-top: 0;
+  font-weight: normal;
+  }
+h2 {
+  font-weight: normal;
+  margin-top:1.51em;
+  }
+h3 {
+  font-weight: normal;
+  font-style: italic;
+  margin-top:1em;
+  }
+p {
+  margin-top:0;
+  -webkit-hypens:auto;
+  -moz-hypens:auto;
+  hyphens:auto;
+  }
+ul {
+  list-style: square;
+  margin-left: 1em;
+  padding-left:1.2em;
+  }
+ol {
+  margin-left: 1em;
+  padding-left:1.2em;
+  }
+blockquote {
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: 1px solid #ddd;
+  }
+code {
+  font-family: "Consolas", "Menlo", "Monaco", monospace, serif;
+  font-size: .9em;
+  }
+a {
+  color: #2484c1;
+  text-decoration: none;
+  }
+a:hover {
+  text-decoration: underline;
+  }
+a img {
+  border:none;
+  }
+h1 a, h1 a:hover {
+  color: #333;
+  text-decoration: none;
+  }
+hr {
+  color : #ddd;
+  height : 1px;
+  margin: 2em 0;
+  border-top : solid 1px #ddd;
+  border-bottom : none;
+  border-left: 0;
+  border-right: 0;
+  }
+p#heart{
+  font-size: 2em;
+  line-height: 1;
+  text-align: center;
+  color: #ccc;
+  }
+.red {
+  color:#B50000;
+  }
+
+  table {
+  	border-collapse: collapse;
+  	text-align: center;
+  	line-height: 1.5;
+    margin-bottom: 1em;
+    width: 90%;
+  }
+  table th {
+  	padding: 10px;
+  	font-weight: bold;
+  	vertical-align: top;
+  	border-right: 1px solid #ccc;
+  	border-bottom: 1px solid #ccc;
+  	border-top: 1px solid #fff;
+  	border-left: 1px solid #fff;
+  	background: #eee;
+  }
+  table td {
+  	padding: 10px;
+  	vertical-align: top;
+  	border: 1px solid #ccc;
+  }

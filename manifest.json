@@ -1,7 +1,7 @@
 {
   "name": "Porter for WorkFlowy",
-  "version": "1.2",
-  "description": "Exports WorkFlowy's outlines to Markdown and HTML. Other some useful features.",
+  "version": "1.3",
+  "description": "__MSG_Manifestdesc__",
   "icons" : {
     "16": "image/icon16.png",
     "48": "image/icon48.png",
@@ -14,22 +14,28 @@
     ]
   },
 
+  "default_locale": "en",
+
   "content_scripts": [ {
     "matches": ["https://workflowy.com/*"],
     "js": [
       "js/jquery-2.2.0.min.js",
       "js/jquery-ui.min.js",
+      "js/tree.jquery.js",
       "js/content_script.js"
       ],
     "css": [
-      "css/jquery-ui.min.css"
+      "css/jqtree.style.css",
+      "css/content_script.css"
       ]
     }
   ],
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "tabs",
+    "contextMenus"
   ],
 
   "page_action": {
@@ -40,7 +46,9 @@
   "options_page": "options.html",
 
   "web_accessible_resources": [
-    "css/theme/*"
+    "http://fonts.gstatic.com/*",
+    "css/theme/*",
+    "css/images/*"
     ],
 
   "manifest_version": 2

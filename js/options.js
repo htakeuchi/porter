@@ -1,10 +1,9 @@
 (function() {
-  var editor;
-  var current_theme;
-  var theme_css;
+  var g_editor;
+  var g_current_theme;
 
   var themes = [
-    {'label': 'Porter theme for WorkFlowy by @htakeuchi',
+    {'label': 'Porter theme for WorkFlowy by \htakeuchi',
       'filename': 'porter'
     },
     {'label': 'Work a Simpler Flowy v2.0 by 72dpi',
@@ -35,36 +34,42 @@
 
   function save() {
     $('#alert').css('display','block');
-    setTimeout(function() {$('#alert').fadeOut();}, 3000);
+    setTimeout(function() {$('#alert').fadeOut();}, 6000);
 
     chrome.storage.sync.set({
-      'custom_css': editor.getValue(),
-      'theme': current_theme,
-      'theme_css': theme_css,
+      'custom_css': g_editor.getValue(),
+      'theme': g_current_theme,
       'theme_enable': document.getElementById('themeEnable').checked,
+      'bookmark_enable': document.getElementById('bookmarkEnable').checked,
+      'bookmark_width': $("input[name='bookmakrWidth']:checked").val()
     });
   };
 
   function load() {
-    chrome.storage.sync.get("theme_enable", function(storage) {
-      document.getElementById('themeEnable').checked = storage.theme_enable;
-      if (storage.theme_enable) {toggle_theme_enable();}
-    });
+    chrome.storage.sync.get([
+      "theme_enable", "theme", "custom_css",
+      "bookmark_enable", "bookmark_width"
+      ],
+      function (option) {
+        // Enable Theme
+        document.getElementById('themeEnable').checked = option.theme_enable;
+        if (option.theme_enable) {toggle_theme_enable();}
 
-    chrome.storage.sync.get("theme", function(storage) {
-      current_theme = storage.theme;
-      setThemeList();
-      change_theme();
-    });
+        // Theme
+        g_current_theme = option.theme;
+        setThemeList();
+        change_theme();
 
-    chrome.storage.sync.get("theme_css", function(storage) {
-      theme_css = storage.theme_css;
-    });
+        // Aditional CSS
+        g_editor.setValue(option.custom_css);
 
-    chrome.storage.sync.get("custom_css", function(storage) {
-      editor.setValue(storage.custom_css);
-    });
-  };
+        // Enable Bookmark
+        document.getElementById('bookmarkEnable').checked = option.bookmark_enable;
+        var width = option.bookmark_width ? option.bookmark_width : "normalRadio";
+        document.getElementById(width).checked = true;
+      }
+    );
+  }
 
   function setThemeList()
   {
@@ -74,7 +79,7 @@
       var option = document.createElement('option');
       option.setAttribute('value', themes[i].filename);
       option.innerHTML = themes[i].label;
-      if (current_theme == themes[i].filename) {option.selected = true;}
+      if (g_current_theme == themes[i].filename) {option.selected = true;}
       select.appendChild(option);
     }
   }
@@ -85,16 +90,22 @@
 
   function change_theme() {
     var select = document.getElementById('themeSelect');
-    current_theme = select.value;
+    g_current_theme = select.value;
   }
 
   function main() {
-    document.getElementById("save").addEventListener("click",  function() { save(); }, false);
+    document.getElementById("apply").addEventListener("click",  function() { save(); }, false);
     document.getElementById("themeEnable").addEventListener("click",  function() { toggle_theme_enable(); }, false);
     document.getElementById("themeSelect").addEventListener("change",  function() { change_theme(); }, false);
+    document.getElementById("showThemeEditor").addEventListener("click",  function() {
+      $('#editorArea').css('display', 'block');
+      $('#showThemeEditor').css('display', 'none');
+      g_editor.refresh();
+      $('#textArea').focus();
+    }, false);
 
     var textArea = document.getElementById("textArea");
-    editor = CodeMirror.fromTextArea(textArea, {
+    g_editor = CodeMirror.fromTextArea(textArea, {
       mode: "css",
       value: "",
       lineNumbers: true,
