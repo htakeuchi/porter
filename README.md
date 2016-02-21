@@ -43,8 +43,11 @@ See LICENSE for more info.
 
 Release Notes
 --------
-### 1.3 - XX XXX 2016
-- Replaceable original keyboard shortcut sidebar to Bookmark list(extract only workflowy.com domain)
+### 1.3 - 21 Feb 2016
+- Bookmark bar (keyboard shortcut sidebar replace to Bookmark bar)
+- Create a table of contents at the time of HTML export
+- Open the topic that you are referred to in the another new window
+- Redesign the option dialog
 
 ### 1.2 - 09 Feb 2016
 - Overwrite custom CSS to the built-in theme
