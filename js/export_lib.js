@@ -28,13 +28,7 @@ var exportLib = (function () {
   toc = function(html) {
     var tocString = '';
     var headings = html.match(/<h[2-5].+?<\/h[2-5]/g);
-
-console.log(headings);
-console.log(html);
-
     if (!headings || headings.length == 0) return tocString;
-
-
 // <h2 id="-https-workflowy-com-547e9e06dc3c-"><a href="https://workflowy.com/#/547e9e06dc3c">はじめに</a></h2>
 
     for (var i=0; i<headings.length; i++) {
@@ -44,7 +38,9 @@ console.log(html);
       title = (!title || title.length == 0) ? "Heading(Empty)" : title;
       tocString = tocString + new Array(level).join('\t') + '1. <a href="#' + href + '">' + title + '</a>\n';
     }
-    return marked(tocString);
+//    tocString = tocString.concat('\n</div>\n');
+
+    return '<div class="toc">' + marked(tocString) + '</div>';
   };
 
   return {
