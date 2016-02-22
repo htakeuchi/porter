@@ -12,7 +12,7 @@
     //   <span class="parentArrow"></span>
     // </div>
     // title in first line
-    list.push({title: e[0].textContent, type: 'title', url: e[0].querySelector('a').href});
+    list.push({title: e[0].textContent, type: 'title'});
     // notes in first line
     var text = e[1].getElementsByClassName("content")[0];
     if (text.textContent.length > 1) {

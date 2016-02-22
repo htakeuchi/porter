@@ -18,7 +18,8 @@
             'preview_html': response.html,
             'preview_title': response.title
           }, function() {
-            chrome.windows.create({"url": url, "type": "popup", "state": "docked"});            
+            chrome.tabs.update(tabs[0].id, {"url": url});
+            //chrome.windows.create({"url": url, "type": "popup", "state": "docked"});
           });
         });
       });
