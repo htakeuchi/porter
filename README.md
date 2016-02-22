@@ -43,6 +43,9 @@ See LICENSE for more info.
 
 Release Notes
 --------
+### 1.3.1 - XX Feb 2016
+- Bug Fixes(unvisible share dialog)
+
 ### 1.3 - 21 Feb 2016
 - Bookmark bar (keyboard shortcut sidebar replace to Bookmark bar)
 - Create a table of contents at the time of HTML export

@@ -5,7 +5,7 @@
   var g_output_toc = false;
   var g_title, g_url;
 
-  var TABLE_REGEXP = /^\|/;
+  var TABLE_REGEXP = /^\s*\|/;
   var BQ_REGEXP = /^\>/;
   var LIST_REGEXP = /^((\*|\-|\+)\s|[0-9]+\.\s)/;
 
