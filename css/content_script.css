@@ -1,10 +1,5 @@
-.ui-dialog {
-  z-index: 1000 !important ;
-}
-
 #jqContextMenu {
   font-size: 90%;
-  z-index: 2000 !important ;
 }
 
 div#bookmark_area {
