@@ -22,6 +22,8 @@
       "js/jquery-2.2.0.min.js",
       "js/jquery-ui.min.js",
       "js/tree.jquery.js",
+      "js/marked.min.js",
+      "js/export_lib.js",
       "js/content_script.js"
       ],
     "css": [
