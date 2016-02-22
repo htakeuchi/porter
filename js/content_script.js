@@ -12,7 +12,7 @@
     //   <span class="parentArrow"></span>
     // </div>
     // title in first line
-    list.push({title: e[0].textContent, type: 'title', href: e[0].querySelector('a').href});
+    list.push({title: e[0].textContent, type: 'title', url: e[0].querySelector('a').href});
     // notes in first line
     var text = e[1].getElementsByClassName("content")[0];
     if (text.textContent.length > 1) {
@@ -27,7 +27,7 @@
         if (e[i].className.match('notes') && text.textContent.length > 1) {
           list.push({title: text.textContent.replace(/\n+$/g,''), type: 'note'});
         } else if (e[i].className.match('name')) {
-          list.push({title: text.textContent, type: 'node', href: e[i].querySelector('a').href});
+          list.push({title: text.textContent, type: 'node', url: e[i].querySelector('a').href});
         };
       };
     };

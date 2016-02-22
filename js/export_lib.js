@@ -27,24 +27,29 @@ var exportLib = (function () {
   // <h2><a name="memo" class="anchor" href="#memo"><span class="header-link"></span></a>MEMO</h2>
   toc = function(html) {
     var tocString = '';
-    var headings = html.match(/<h[2-5]>.+?<\/h[2-5]>/g);
+    var headings = html.match(/<h[2-5].+?<\/h[2-5]/g);
+
+console.log(headings);
+console.log(html);
+
     if (!headings || headings.length == 0) return tocString;
 
+
+// <h2 id="-https-workflowy-com-547e9e06dc3c-"><a href="https://workflowy.com/#/547e9e06dc3c">はじめに</a></h2>
+
     for (var i=0; i<headings.length; i++) {
-      var level = headings[i].match(/<h(\d)>/)[1] - 1;
-      var href = headings[i].match(/href="([^"]+?)"/)[1];
-      var title = headings[i].match(/>([^<]+?)<\/h/)[1];
+      var level = headings[i].match(/<h(\d)/)[1] - 1;
+      var href = headings[i].match(/id="([^"]+?)"/)[1];
+      var title = headings[i].match(/>([^<]+?)<\/a/)[1];
       title = (!title || title.length == 0) ? "Heading(Empty)" : title;
-      tocString = tocString + new Array(level).join('\t') + '1. <a href="' + href + '">' + title + '</a>\n';
+      tocString = tocString + new Array(level).join('\t') + '1. <a href="#' + href + '">' + title + '</a>\n';
     }
     return marked(tocString);
   };
 
   return {
-    html: "",
-    title: "",
     // public method
-    toMarkdown: function(nodes, output_notes) {
+    toMarkdown: function(nodes, output_notes, outputHeadingLink) {
       var text = "# " + nodes[0].title + "\n";
       var previous = null;
       var prevElement = null;
@@ -80,7 +85,9 @@ var exportLib = (function () {
             // HEADING
             if (element == "PARAGRAPH"){
               if (prevElement == "QUOTE" || prevElement == "LIST") indent = "\n";
-              text =  text.concat(indent + new Array(level).join('#') + " " + nodes[i].title + "\n");
+              var title = outputHeadingLink ? '[' + nodes[i].title + '](' + nodes[i].url + ')' : nodes[i].title;
+              var line = indent + new Array(level).join('#') + " " + title + "\n";
+              text =  text.concat(line);
               prevElement = "HEADING";
               continue;
             }
@@ -116,9 +123,10 @@ var exportLib = (function () {
       return text;
     },
 
-    toHtml: function(nodes, output_notes, output_toc) {
+    toHtml: function(nodes, output_notes, output_toc, outputHeadingLink) {
       var renderer = new marked.Renderer();
 
+/*
       renderer.heading = function (text, level) {
     //      var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
         var escapedText = text.toLowerCase().replace(/¥s/g, '-');
@@ -129,12 +137,13 @@ var exportLib = (function () {
                        '"><span class="header-link"></span></a>' +
                         text + '</h' + level + '>\n';
       };
-      var html = marked(this.toMarkdown(nodes, output_notes), { renderer: renderer });
+
+*/      var html = marked(this.toMarkdown(nodes, output_notes, outputHeadingLink), { renderer: renderer });
       return output_toc ? toc(html) + html : html;
     },
 
     toPreviewHTML: function(nodes) {
-      return this.toHtml(nodes, false, true);
+      return this.toHtml(nodes, false, true, true);
     }
   };
 })();
