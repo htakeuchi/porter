@@ -1,18 +1,43 @@
+@import url(//fonts.googleapis.com/css?family=Vollkorn:400,400italic,700,700italic&subset=latin);
+
 html, body {
         padding:1em;
+        margin:auto;
+        max-width:42em;
         background:#fefefe;
   }
 body {
-  font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
+  font: 1.3em "Vollkorn", Palatino, Times;
   color: #333;
   line-height: 1.4;
   text-align: justify;
   }
+header, nav, article, footer {
+  width: 700px;
+  margin:0 auto;
+  }
+article {
+  margin-top: 4em;
+  margin-bottom: 4em;
+  min-height: 400px;
+  }
+footer {
+  margin-bottom:50px;
+  }
+video {
+  margin: 2em 0;
+  border:1px solid #ddd;
+  }
 
-
-div.content {
-  width: 99px;
-}
+nav {
+  font-size: .9em;
+  font-style: italic;
+  border-bottom: 1px solid #ddd;
+  padding: 1em 0;
+  }
+nav p {
+  margin: 0;
+  }
 
 /* Typography
 -------------------------------------------------------- */
@@ -23,12 +48,11 @@ h1 {
   }
 h2 {
   font-weight: normal;
-  margin-top:1.51em;
   }
 h3 {
   font-weight: normal;
   font-style: italic;
-  margin-top:1em;
+  margin-top:3em;
   }
 p {
   margin-top:0;
@@ -38,11 +62,9 @@ p {
   }
 ul {
   list-style: square;
-  margin-left: 1em;
   padding-left:1.2em;
   }
 ol {
-  margin-left: 1em;
   padding-left:1.2em;
   }
 blockquote {
@@ -87,25 +109,33 @@ p#heart{
   color:#B50000;
   }
 
-  table {
-  	border-collapse: collapse;
-  	text-align: center;
-  	line-height: 1.5;
-    margin-bottom: 1em;
-    width: 90%;
+/* Home Page
+--------------------------- */
+
+body#index li {
+  margin-bottom: 1em;
   }
-  table th {
-  	padding: 10px;
-  	font-weight: bold;
-  	vertical-align: top;
-  	border-right: 1px solid #ccc;
-  	border-bottom: 1px solid #ccc;
-  	border-top: 1px solid #fff;
-  	border-left: 1px solid #fff;
-  	background: #eee;
+
+
+/* iPad
+-------------------------------------------------------- */
+@media only screen and (max-device-width: 1024px) {
+body {
+  font-size: 120%;
+  line-height: 1.4;
   }
-  table td {
-  	padding: 10px;
-  	vertical-align: top;
-  	border: 1px solid #ccc;
+} /* @iPad */
+
+/* iPhone
+-------------------------------------------------------- */
+@media only screen and (max-device-width: 480px) {
+body {
+  text-align: left;
   }
+article, footer {
+  width: auto;
+  }
+article {
+  padding: 0 10px;
+  }
+} /* @iPhone */

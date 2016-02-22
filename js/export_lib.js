@@ -41,6 +41,8 @@ var exportLib = (function () {
   };
 
   return {
+    html: "",
+    title: "",
     // public method
     toMarkdown: function(nodes, output_notes) {
       var text = "# " + nodes[0].title + "\n";
@@ -129,6 +131,10 @@ var exportLib = (function () {
       };
       var html = marked(this.toMarkdown(nodes, output_notes), { renderer: renderer });
       return output_toc ? toc(html) + html : html;
+    },
+
+    toPreviewHTML: function(nodes) {
+      return this.toHtml(nodes, false, true);
     }
   };
 })();

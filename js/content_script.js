@@ -244,8 +244,11 @@
 
     chrome.extension.onMessage.addListener(function(msg, sender, callback) {
       switch (msg.request) {
-        case 'getTopic':
         case 'preview':
+          var nodes = elementsToArray(document.querySelector('div.selected'));
+          callback({html: exportLib.toPreviewHTML(nodes), title: document.title});
+          break;
+        case 'getTopic':
           getContent(callback);
           break;
         case 'bookmark':
