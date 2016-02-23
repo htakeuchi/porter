@@ -6,7 +6,7 @@
   position: fixed;
   left: auto;
   right: 10px;
-  width: 225px;
+  width: 400px;
   padding: 1em;
   padding-right: 0px;
   overflow-y: scroll;
@@ -40,6 +40,23 @@
   padding-bottom: .5em;
   border-bottom: 1px solid #ccc;
 }
+#navigationBar #topicNavi ol,ul li {
+  margin: 0 0 0 1em;
+  padding: 0;
+}
+#navigationBar #topicNavi ol {
+  counter-reset: section;
+}
+#navigationBar #topicNavi li {
+  list-style: none;
+}
+#navigationBar #topicNavi ol>li:before {
+  content : counters(section, '-') '. ';
+  counter-increment : section;
+}
+#navigationBar #topicNavi ul li {
+   list-style-type: disc;
+}
 
 #navigationBar #topicNaviMenu, #bookmarkMenu {
   text-align: right;
@@ -54,8 +71,8 @@
 #navigationBar #topicNavi {
   margin-top: 1em;
 }
-#navigationBar #bookmark {
-  margin-top: 1em;
+#navigationBar #topicNavi {
+  margin-bottom: 1em;
 }
 #navigationBar #addBookmark, #addFolderLink, #editLink, #deleteLink {
   font-size: 90%;

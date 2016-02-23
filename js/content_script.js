@@ -220,13 +220,12 @@
 
       var naviMd = '';
       for (var i=0; i<headings.length; i++) {
-        var level = headings[i].match(/^(#+)\s/)[0].length - 1;
-        if (level > 3) continue;
-        naviMd = naviMd + headings[i].replace(/^#+/, new Array(level).join('\t') + '1.');
+        var level = headings[i].match(/^(#+)\s/)[0].length - 2;
+        if (level <= 0 || level > 3) continue;
+        naviMd = naviMd + headings[i].replace(/^#+/, new Array(level).join('\t') + '*');
       }
-console.log(naviMd);
-var html = marked(naviMd);
-console.log(html);
+
+      var html = marked(naviMd);
       $('#navigationBar #topicNavi').html(html);
     },
     function() {});
