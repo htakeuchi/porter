@@ -103,7 +103,7 @@
   }
 
   function getRootNode() {
-    var tree = $('#bookmark_area');
+    var tree = $('#bookmark');
     return {"tree": tree, "node": tree.tree('getNodeById', 1)};
   }
 
@@ -127,7 +127,7 @@
 
   function saveBookmark() {
     setTimeout(function() {
-      var tree = $('#bookmark_area');
+      var tree = $('#bookmark');
       chrome.storage.sync.set({
         'bookmarks': tree.tree('toJson')
       });
@@ -135,7 +135,7 @@
   }
 
   function getSelectedNode() {
-    var tree = $('#bookmark_area');
+    var tree = $('#bookmark');
     return tree.tree('getSelectedNode');
   }
 
@@ -143,7 +143,7 @@
     var node = getSelectedNode();
     if (!node) return;
     if (window.confirm(chrome.i18n.getMessage('ConfirmDelete'))) {
-      $('#bookmark_area').tree('removeNode', node);
+      $('#bookmark').tree('removeNode', node);
       saveBookmark();
     }
   }
@@ -154,36 +154,14 @@
     var title = window.prompt(chrome.i18n.getMessage('Edittitle'), node.name);
     if (typeof title === "undefined" || title == null || title.length == 0) return;
 
-    var tree = $('#bookmark_area');
+    var tree = $('#bookmark');
     tree.tree('updateNode', node, title);
     saveBookmark();
   }
 
-  function getSidebarHtml() {
-    var m1 = chrome.i18n.getMessage('Folder');
-    var m2 = chrome.i18n.getMessage('Edit');
-    var m3 = chrome.i18n.getMessage('Delete');
-    return '<div class="title ui-dialog-titlebar ui-widget-header">\
-    <span>' + chrome.i18n.getMessage('Bookmark') + '<br/>\
-    <a href="#" id="addBookmark">&#9825;</a>\
-    <a href="#" id="addFolderLink">' + chrome.i18n.getMessage('Folder') + '</a>\
-    <a href="#" id="editLink">' + chrome.i18n.getMessage('Edit') + '</a>\
-    <a href="#" id="deleteLink"><span id="deleteSpan">' + chrome.i18n.getMessage('Delete')  + '</span></a>\
-    </span></div>\
-    <div id="bookmark_area"></div>';
-  }
-
-  function setSidebarLister() {
-    $('#keyboardShortcutHelper').html(getSidebarHtml());
-    $('#addBookmark').click(function() {addBookmark(); return false});
-    $('#addFolderLink').click(function() {addBookmarkFolder(); return false});
-    $('#editLink').click(function() {editBookmark(); return false});
-    $('#deleteLink').click(function() {deleteBookmark(); return false});
-  }
-
-  function buildSidebarTree(bookmarks) {
+  function buildBookmarkTree(bookmarks) {
     // Build Tree
-    var bookmarkArea = $('#bookmark_area');
+    var bookmarkArea = $('#navigationBar #bookmark');
     bookmarkArea.tree({
       dragAndDrop: true,
       autoOpen: 0,
@@ -205,22 +183,53 @@
     });
   }
 
-  function replaceSideBar()
+  function getBookmarkMenu() {
+    return '<a href="#" id="addBookmark" title="Add bookmark"></a>\
+            <a href="#" id="addFolderLink"></a>\
+            <a href="#" id="editLink"></a>\
+            <a href="#" id="deleteLink"></a>';
+  }
+
+  function setupBookmarkArea()
   {
     var bookmarks = [];
     chrome.storage.sync.get(["bookmark_enable", "bookmarks", "bookmark_width"], function (option) {
       if (option.bookmark_enable) {
-        var width = option.bookmark_width == "wideRadio" ? '{width: 370px}' : '{width: 270px}';
-        setCSS('#keyboardShortcutHelper' + width);
-
+        // TODO: delete bookmark width option
         if (!option.bookmarks) {
         } else {
           bookmarks = JSON.parse(option.bookmarks);
         }
-        setSidebarLister();
-        buildSidebarTree(bookmarks);
+        $('#bookmarkMenu').html(getBookmarkMenu());
+        buildBookmarkTree(bookmarks);
+
+        $('#addBookmark').click(function() {addBookmark(); return false});
+        $('#addFolderLink').click(function() {addBookmarkFolder(); return false});
+        $('#editLink').click(function() {editBookmark(); return false});
+        $('#deleteLink').click(function() {deleteBookmark(); return false});
       }
     });
+  }
+  // #### [その他確認・共有事項](https://workflowy.com/#/b5f2cdbf30e9)
+  function setupTopicNavi() {
+    $('#navigationBar').hover(function () {
+      var content = elementsToArray(document.querySelector('div.selected'));
+      var md = exportLib.toMarkdown(content, false, true);
+      var headings = md.match(/^#.+?\n/mg);
+      if (!headings || headings.length == 0) return;
+
+      var naviMd = '';
+      for (var i=0; i<headings.length; i++) {
+        var level = headings[i].match(/^(#+)\s/)[0].length - 1;
+        if (level > 3) continue;
+        naviMd = naviMd + headings[i].replace(/^#+/, new Array(level).join('\t') + '1.');
+      }
+console.log(naviMd);
+var html = marked(naviMd);
+console.log(html);
+      $('#navigationBar #topicNavi').html(html);
+    },
+    function() {});
   }
 
   function getContent(callback) {
@@ -228,6 +237,21 @@
     var url = location.href;
     var title = document.title;
     callback({content: content, url: url, title: title});
+  }
+
+  function createNavigationBar() {
+    var navigationBar = '\
+  　 <div id="navigationBar">\
+       <h2>Topic Navigation</h2>\
+  　   <div id="topicNaviMenu"><a href="#" id="refreshAnchor"></a></div>\
+       <div id="topicNavi"></div>\
+       <h2>' + chrome.i18n.getMessage('Bookmark') + '</h2>\
+       <div id="bookmarkMenu"></div>\
+       <div id="bookmark"></div>\
+     </div>';
+    $('body').append(navigationBar);
+    setupBookmarkArea();
+    setupTopicNavi();
   }
 
   function main() {
@@ -238,7 +262,7 @@
 
     $(document).ready(function(){
       injectCSS();
-      replaceSideBar();
+      createNavigationBar();
       addTextCounter();
     });
 

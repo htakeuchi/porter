@@ -29,17 +29,14 @@ var exportLib = (function () {
     var tocString = '';
     var headings = html.match(/<h[2-5].+?<\/h[2-5]/g);
     if (!headings || headings.length == 0) return tocString;
-// <h2 id="-https-workflowy-com-547e9e06dc3c-"><a href="https://workflowy.com/#/547e9e06dc3c">はじめに</a></h2>
 
     for (var i=0; i<headings.length; i++) {
       var level = headings[i].match(/<h(\d)/)[1] - 1;
       var href = headings[i].match(/id="([^"]+?)"/)[1];
-      var title = headings[i].match(/>([^<]+?)<\/a/)[1];
+      var title = headings[i].match(/>([^<]+?)<\//)[1];
       title = (!title || title.length == 0) ? "Heading(Empty)" : title;
       tocString = tocString + new Array(level).join('\t') + '1. <a href="#' + href + '">' + title + '</a>\n';
     }
-//    tocString = tocString.concat('\n</div>\n');
-
     return '<div class="toc">' + marked(tocString) + '</div>';
   };
 
@@ -134,7 +131,8 @@ var exportLib = (function () {
                         text + '</h' + level + '>\n';
       };
 
-*/      var html = marked(this.toMarkdown(nodes, output_notes, outputHeadingLink), { renderer: renderer });
+*/
+      var html = marked(this.toMarkdown(nodes, output_notes, outputHeadingLink), { renderer: renderer });
       return output_toc ? toc(html) + html : html;
     },
 
