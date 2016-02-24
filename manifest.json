@@ -28,6 +28,7 @@
       ],
     "css": [
       "css/jqtree.style.css",
+      "css/font-awesome.css",
       "css/content_script.css"
       ]
     }

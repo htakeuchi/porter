@@ -184,10 +184,10 @@
   }
 
   function getBookmarkMenu() {
-    return '<a href="#" id="addBookmark" title="Add bookmark"></a>\
-            <a href="#" id="addFolderLink"></a>\
-            <a href="#" id="editLink"></a>\
-            <a href="#" id="deleteLink"></a>';
+    return '<span id="addBookmark" class="naviMenuItem" title="Add bookmark"></span>\
+            <span id="addFolderLink" class="naviMenuItem" title="Add floder"></span>\
+            <span id="editLink" class="naviMenuItem" title="Edit title"></span>\
+            <span id="deleteLink" class="naviMenuItem" title="Remove bookmark"></span>';
   }
 
   function setupBookmarkArea()
