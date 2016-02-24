@@ -117,22 +117,7 @@ var exportLib = (function () {
     },
 
     toHtml: function(nodes, output_notes, output_toc, outputHeadingLink) {
-      var renderer = new marked.Renderer();
-
-/*
-      renderer.heading = function (text, level) {
-    //      var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
-        var escapedText = text.toLowerCase().replace(/¥s/g, '-');
-        return '<h' + level + '><a name="' +
-                      escapedText +
-                       '" class="anchor" href="#' +
-                       escapedText +
-                       '"><span class="header-link"></span></a>' +
-                        text + '</h' + level + '>\n';
-      };
-
-*/
-      var html = marked(this.toMarkdown(nodes, output_notes, outputHeadingLink), { renderer: renderer });
+      var html = marked(this.toMarkdown(nodes, output_notes, outputHeadingLink));
       return output_toc ? toc(html) + html : html;
     },
 

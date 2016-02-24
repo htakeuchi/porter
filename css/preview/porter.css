@@ -1,8 +1,8 @@
 html, body {
-        padding:1em;
-        margin:auto;
-        max-width:42em;
-        background:#fafafa; /*#fefefe;*/
+  padding:1em;
+  margin:auto;
+  max-width:42em;
+  background:#fafafa; /*#fefefe;*/
   }
 body {
   font: 1.3em "Vollkorn", Palatino, Times;
@@ -133,21 +133,21 @@ tbody tr:hover td
 	color: #009;
 }
 div.toc {
-    padding: 20px;
-    background: #f8f8f8;
-    border: 0.5px #ccc solid;
-    box-shadow: 0 1px 2px 0 #ddd;
-    -moz-box-shadow: 0 1px 2px 0 #ddd;
-    -webkit-box-shadow: 0 1px 2px 0 #ddd;
-    margin-bottom:3em;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 0.5px #ccc solid;
+  box-shadow: 0 1px 2px 0 #ddd;
+  -moz-box-shadow: 0 1px 2px 0 #ddd;
+  -webkit-box-shadow: 0 1px 2px 0 #ddd;
+  margin-bottom:3em;
 }
 div.toc ol {
-    counter-reset: section;
+  counter-reset: section;
 }
 div.toc li {
-    list-style: none;
+  list-style: none;
 }
 div.toc ol>li:before {
-    content : counters(section, '.') '. ';
-    counter-increment : section;
+  content : counters(section, '.') '. ';
+  counter-increment : section;
 }

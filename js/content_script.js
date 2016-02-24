@@ -241,11 +241,9 @@
   function createNavigationBar() {
     var navigationBar = '\
   　 <div id="navigationBar">\
-       <h2>Topic Navigation</h2>\
-  　   <div id="topicNaviMenu"><a href="#" id="refreshAnchor"></a></div>\
+       <div class="menuHeader">Topic Navigation</div>\
        <div id="topicNavi"></div>\
-       <h2>' + chrome.i18n.getMessage('Bookmark') + '</h2>\
-       <div id="bookmarkMenu"></div>\
+       <div class="menuHeader">' + chrome.i18n.getMessage('Bookmark') +  '<span id="bookmarkMenu"></span></div>\
        <div id="bookmark"></div>\
      </div>';
     $('body').append(navigationBar);
