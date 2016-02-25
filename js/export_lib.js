@@ -116,8 +116,43 @@ var exportLib = (function () {
       return text;
     },
 
+    getRenderer: function(escape) {
+      var renderer = new marked.Renderer();
+      renderer.heading = function(text, level) {
+        return '<h'
+          + level
+          + ' id="'
+//          + raw.toLowerCase().replace(/[^\w]+/g, '-')
+          + escape ? exportLib.escapeHtml(text) :text
+          + '">'
+          + escape ? exportLib.escapeHtml(text) : text
+          + '</h'
+          + level
+          + '>\n';
+      };
+      return renderer;
+    },
+
+    escapeHtml: function(content) {
+      var TABLE_FOR_ESCAPE_HTML = {
+        "&": "&amp;",
+        "\"": "&quot;",
+        "<": "&lt;",
+        ">": "&gt;"
+      };
+      return content.replace(/[&"<>]/g, function(match) {
+        return TABLE_FOR_ESCAPE_HTML[match];
+      });
+    },
+
     toHtml: function(nodes, output_notes, output_toc, outputHeadingLink) {
-      var html = marked(this.toMarkdown(nodes, output_notes, outputHeadingLink));
+      var renderer = this.getRenderer();
+console.log('toHtml');
+      var md = this.toMarkdown(nodes, output_notes, outputHeadingLink);
+console.log(md);
+//      var html = marked(md,{ renderer: renderer });
+      var html = marked(md);
+console.log(html);
       return output_toc ? toc(html) + html : html;
     },
 

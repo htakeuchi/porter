@@ -212,7 +212,7 @@
   function refreshTopicNavi() {
     var content = elementsToArray(document.querySelector('div.selected'));
     var md = exportLib.toMarkdown(content, false, true);
-    var headings = md.match(/^#.+?\n/mg);
+    var headings = md.match(/^#+ .+?\n/mg);
 
     if (!headings || headings.length == 0) return;
 
@@ -220,9 +220,11 @@
     for (var i=0; i<headings.length; i++) {
       var level = headings[i].match(/^(#+)\s/)[0].length - 2;
       if (level <= 0 || level > 2) continue;
-      naviMd = naviMd + headings[i].replace(/^#+/, new Array(level).join('\t') + '*');
+      headings[i].match(/\[([^\]]+?)]/);
+      var hd = headings[i].replace(/\[([^\]]+?)]/, '[' + exportLib.escapeHtml(RegExp.$1) + ']');
+      naviMd = naviMd + hd.replace(/^#+/, new Array(level).join('\t') + '*');
     }
-    var html = marked(naviMd);
+    var html = marked(naviMd, { renderer: exportLib.getRenderer(true) });
     $('#navigationBar #topicNavi').html(html);
   }
 
