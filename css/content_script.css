@@ -67,9 +67,6 @@
 #navigationBar #topicNavi ol {
   counter-reset: section;
 }
-#navigationBar #topicNavi li {
-  list-style: none;
-}
 #navigationBar #topicNavi ol>li:before {
   content : counters(section, '-') '. ';
   counter-increment : section;

@@ -44,8 +44,8 @@ See LICENSE for more info.
 Release Notes
 --------
 ### 1.4 - XX Feb 2016
-- Bug Fixes(unvisible share dialog)
-- Naviation bar (bookmark integrated)
+- Bug Fixes (share dialog not work)
+- Naviation bar (Bookmark bar integrated)
 - HTML Preview
 
 ### 1.3 - 21 Feb 2016
