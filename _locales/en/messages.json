@@ -30,10 +30,10 @@
     "message": "Addtional CSS"
   },
   "Delete": {
-    "message": "[Delete]"
+    "message": "Delete bookmark"
   },
   "Edit": {
-    "message": "[Edit]"
+    "message": "Edit title"
   },
   "Editor": {
     "message": "(Show Editor)"
@@ -48,7 +48,7 @@
     "message": "Enable Theme"
   },
   "Folder": {
-    "message": "[+Folder]"
+    "message": "Add Folder"
   },
   "Format": {
     "message": "Format"
@@ -85,6 +85,9 @@
   },
   "Theme": {
     "message": "Theme"
+  },
+  "Topicnavigation": {
+    "message": "Topic Navigation"
   },
   "Wide": {
     "message": "Wide"

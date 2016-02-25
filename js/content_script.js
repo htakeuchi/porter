@@ -184,10 +184,10 @@
   }
 
   function getBookmarkMenu() {
-    return '<span id="addBookmark" class="naviMenuItem" title="Add bookmark"></span>\
-            <span id="addFolderLink" class="naviMenuItem" title="Add floder"></span>\
-            <span id="editLink" class="naviMenuItem" title="Edit title"></span>\
-            <span id="deleteLink" class="naviMenuItem" title="Remove bookmark"></span>';
+    return '<span id="addBookmark" class="naviMenuItem" title="' + chrome.i18n.getMessage('Addtobookmark') + '"></span>\
+            <span id="addFolderLink" class="naviMenuItem" title="' + chrome.i18n.getMessage('Folder') + '"></span>\
+            <span id="editLink" class="naviMenuItem" title="' + chrome.i18n.getMessage('Edit') + '"></span>\
+            <span id="deleteLink" class="naviMenuItem" title="' + chrome.i18n.getMessage('Delete') + '"></span>';
   }
 
   function setupBookmarkArea()
@@ -241,7 +241,7 @@
   function createNavigationBar() {
     var navigationBar = '\
   　 <div id="navigationBar">\
-       <div class="menuHeader">Topic Navigation</div>\
+       <div class="menuHeader">' + chrome.i18n.getMessage('Topicnavigation') + '</div>\
        <div id="topicNavi"></div>\
        <div class="menuHeader">' + chrome.i18n.getMessage('Bookmark') +  '<span id="bookmarkMenu"></span></div>\
        <div id="bookmark"></div>\

@@ -43,8 +43,10 @@ See LICENSE for more info.
 
 Release Notes
 --------
-### 1.3.1 - XX Feb 2016
+### 1.4 - XX Feb 2016
 - Bug Fixes(unvisible share dialog)
+- Naviation bar (bookmark integrated)
+- HTML Preview
 
 ### 1.3 - 21 Feb 2016
 - Bookmark bar (keyboard shortcut sidebar replace to Bookmark bar)
