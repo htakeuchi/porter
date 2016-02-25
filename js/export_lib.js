@@ -24,7 +24,7 @@ var exportLib = (function () {
     return e;
   };
 
-  // <h2><a name="memo" class="anchor" href="#memo"><span class="header-link"></span></a>MEMO</h2>
+//<h2 id="-https-workflowy-com-e006e364de95-"><a href="https://workflowy.com/#/e006e364de95">機能</a></h2>
   toc = function(html) {
     var tocString = '';
     var headings = html.match(/<h[2-5].+?<\/h[2-5]/g);
@@ -33,9 +33,10 @@ var exportLib = (function () {
     for (var i=0; i<headings.length; i++) {
       var level = headings[i].match(/<h(\d)/)[1] - 1;
       var href = headings[i].match(/id="([^"]+?)"/)[1];
-      var title = headings[i].match(/>([^<]+?)<\//)[1];
+//      var title = headings[i].match(/>([^<]+?)<\//)[1];
+      var title = headings[i].match(/href="[^"]+">([^<]+?)<\/a/)[1];
       title = (!title || title.length == 0) ? "Heading(Empty)" : title;
-      tocString = tocString + new Array(level).join('\t') + '1. <a href="#' + href + '">' + title + '</a>\n';
+      tocString = tocString + new Array(level).join('\t') + '1. <a href="#' + href + '">' + exportLib.escape(title) + '</a>\n';
     }
     return '<div class="toc">' + marked(tocString) + '</div>';
   };
