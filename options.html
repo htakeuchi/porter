@@ -19,64 +19,30 @@
           </div>
 
           <div class="panel-body">
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab"  class="locale General">General</a></li>
-              <li role="presentation"><a href="#theme" aria-controls="theme" role="tab" data-toggle="tab" class="locale Theme">Theme</a></li>
-            </ul>
-
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="general">
-                <div class="panel-body">
-                  <div class="panel panel-default">
-                    <div class="panel-heading"><h4 style="margin:0; padding:0" class="locale Bookmark">Bookmark</h4></div>
-                    <div class="panel-body">
-                      <form>
-                        <div class="form-group">
-                          <input type="checkbox" id="bookmarkEnable"><label class="locale Enablebookmark">Enable Bookmark (Replace WorkFlowy's help bar to the original bookmark bar)</label>
-                        </div>
-                        <div class="form-group">
-                          <label class="locale Bookmarkwidth" style="margin-right:1em;">Bookmark width</label>
-                          <input type="radio" name="bookmakrWidth" id="narrowRadio" value="narrowRadio">
-                          <label class="locale Narrow"> Narrow</label>
-
-                          <input type="radio" name="bookmakrWidth" id="wideRadio" value="wideRadio">
-                          <label class="locale Wide"> Wide</label>
-                        </div>
-                      </form>
-                    </div>
+            <div class="panel panel-default">
+              <div class="panel-heading"><h4 style="margin:0; padding:0" class="locale Theme">Theme</h5></div>
+              <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <input type="checkbox" id="themeEnable"> <label class="locale Enabletheme">Enable Theme</label>
                   </div>
-                </div>
-              </div>
-
-              <div role="tabpanel" class="tab-pane" id="theme">
-                <div class="panel-body">
-                  <div class="panel panel-default">
-                    <div class="panel-heading"><h4 style="margin:0; padding:0" class="locale Theme">Theme</h5></div>
-                    <div class="panel-body">
-                      <form>
-                        <div class="form-group">
-                          <input type="checkbox" id="themeEnable"> <label class="locale Enabletheme">Enable Theme</label>
-                        </div>
-                        <div class="form-group">
-                          <label for="themeSelect" class="locale Basetheme">Base Theme</label>
-                          <select class="form-control" id="themeSelect"></select>
-                        </div>
-                        <label for="editorArea" class="locale Customcss">Addtional CSS</label>
-                        <a href="#" id="showThemeEditor" class="locale Editor"> (Show Editor)</a>
-                        <div class="form-group" id="editorArea" style=" border: 1px solid #ccc; display:none;">
-                          <textarea class="form-control" id="textArea" rows="7" ></textarea>
-                        </div>
-                      </form>
-                    </div>
+                  <div class="form-group">
+                    <label for="themeSelect" class="locale Basetheme">Base Theme</label>
+                    <select class="form-control" id="themeSelect"></select>
                   </div>
-                </div>
+                  <label for="editorArea" class="locale Customcss">Addtional CSS</label>
+                  <a href="#" id="showThemeEditor" class="locale Editor"> (Show Editor)</a>
+                  <div class="form-group" id="editorArea" style=" border: 1px solid #ccc; display:none;">
+                    <textarea class="form-control" id="textArea" rows="7" ></textarea>
+                  </div>
+                </form>
               </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <div class="alert alert-info" role="alert" id="alert" style="display:none;"><span class="locale ApplyMessage">Applied! ***Please reload*** the tab of WorkFlowy.</strong></span></div>
-              <button type="button" id="apply" class="btn btn-primary center-block applyButton" ><span class="locale Apply">Apply</span></button>
-            </div>
+          <div class="form-group">
+            <div class="alert alert-info" role="alert" id="alert" style="display:none;"><span class="locale ApplyMessage">Applied! ***Please reload*** the tab of WorkFlowy.</strong></span></div>
+            <button type="button" id="apply" class="btn btn-primary center-block applyButton" ><span class="locale Apply">Apply</span></button>
           </div>
         </div>
       </div>

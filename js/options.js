@@ -40,15 +40,12 @@
       'custom_css': g_editor.getValue(),
       'theme': g_current_theme,
       'theme_enable': document.getElementById('themeEnable').checked,
-      'bookmark_enable': document.getElementById('bookmarkEnable').checked,
-      'bookmark_width': $("input[name='bookmakrWidth']:checked").val()
     });
   };
 
   function load() {
     chrome.storage.sync.get([
       "theme_enable", "theme", "custom_css",
-      "bookmark_enable", "bookmark_width"
       ],
       function (option) {
         // Enable Theme
@@ -62,11 +59,6 @@
 
         // Aditional CSS
         g_editor.setValue(option.custom_css);
-
-        // Enable Bookmark
-        document.getElementById('bookmarkEnable').checked = option.bookmark_enable;
-        var width = option.bookmark_width ? option.bookmark_width : "normalRadio";
-        document.getElementById(width).checked = true;
       }
     );
   }

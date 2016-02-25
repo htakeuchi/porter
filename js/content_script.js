@@ -172,6 +172,7 @@
       function(event) {
         var node = event.node;
         if (typeof node.url !== "undefined") location.href = node.url;
+        setTimeout(function() { refreshTopicNavi();}, 500);
       }
     );
     bookmarkArea.bind('tree.dblclick',
@@ -193,42 +194,40 @@
   function setupBookmarkArea()
   {
     var bookmarks = [];
-    chrome.storage.sync.get(["bookmark_enable", "bookmarks", "bookmark_width"], function (option) {
-      if (option.bookmark_enable) {
-        // TODO: delete bookmark width option
-        if (!option.bookmarks) {
-        } else {
-          bookmarks = JSON.parse(option.bookmarks);
-        }
-        $('#bookmarkMenu').html(getBookmarkMenu());
-        buildBookmarkTree(bookmarks);
-
-        $('#addBookmark').click(function() {addBookmark(); return false});
-        $('#addFolderLink').click(function() {addBookmarkFolder(); return false});
-        $('#editLink').click(function() {editBookmark(); return false});
-        $('#deleteLink').click(function() {deleteBookmark(); return false});
+    chrome.storage.sync.get(["bookmarks"], function (option) {
+      if (!option.bookmarks) {
+      } else {
+        bookmarks = JSON.parse(option.bookmarks);
       }
+      $('#bookmarkMenu').html(getBookmarkMenu());
+      buildBookmarkTree(bookmarks);
+
+      $('#addBookmark').click(function() {addBookmark(); return false});
+      $('#addFolderLink').click(function() {addBookmarkFolder(); return false});
+      $('#editLink').click(function() {editBookmark(); return false});
+      $('#deleteLink').click(function() {deleteBookmark(); return false});
     });
   }
-  // #### [その他確認・共有事項](https://workflowy.com/#/b5f2cdbf30e9)
+
+  function refreshTopicNavi() {
+    var content = elementsToArray(document.querySelector('div.selected'));
+    var md = exportLib.toMarkdown(content, false, true);
+    var headings = md.match(/^#.+?\n/mg);
+
+    if (!headings || headings.length == 0) return;
+
+    var naviMd = '';
+    for (var i=0; i<headings.length; i++) {
+      var level = headings[i].match(/^(#+)\s/)[0].length - 2;
+      if (level <= 0 || level > 2) continue;
+      naviMd = naviMd + headings[i].replace(/^#+/, new Array(level).join('\t') + '*');
+    }
+    var html = marked(naviMd);
+    $('#navigationBar #topicNavi').html(html);
+  }
+
   function setupTopicNavi() {
-    $('#navigationBar').hover(function () {
-      var content = elementsToArray(document.querySelector('div.selected'));
-      var md = exportLib.toMarkdown(content, false, true);
-      var headings = md.match(/^#.+?\n/mg);
-      if (!headings || headings.length == 0) return;
-
-      var naviMd = '';
-      for (var i=0; i<headings.length; i++) {
-        var level = headings[i].match(/^(#+)\s/)[0].length - 2;
-        if (level <= 0 || level > 3) continue;
-        naviMd = naviMd + headings[i].replace(/^#+/, new Array(level).join('\t') + '*');
-      }
-
-      var html = marked(naviMd);
-      $('#navigationBar #topicNavi').html(html);
-    },
-    function() {});
+    $('#navigationBar').hover(function () { refreshTopicNavi();}, function() {});
   }
 
   function getContent(callback) {

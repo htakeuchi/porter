@@ -59,7 +59,7 @@ p {
   hyphens:auto;
   }
 ul {
-  list-style: square;
+  list-style: disc;
   padding-left:1.2em;
   }
 ol {
