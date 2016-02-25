@@ -19,7 +19,7 @@
     g_current_format = type;
     switch (type) {
       case "markdown":
-        text = exportLib.toMarkdown(g_nodes, g_output_notes);
+        text = exportLib.toMarkdown(g_nodes, {outputNotes: g_output_notes, outputToc: g_output_toc});
         break;
       case "html":
         text = exportLib.toHtml(g_nodes, g_output_notes, g_output_toc);
