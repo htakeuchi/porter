@@ -22,7 +22,7 @@
         text = exportLib.toMarkdown(g_nodes, {outputNotes: g_output_notes, outputToc: g_output_toc});
         break;
       case "html":
-        text = exportLib.toHtml(g_nodes, g_output_notes, g_output_toc);
+        text = exportLib.toHtml(g_nodes, {outputNotes: g_output_notes, outputToc: g_output_toc});
         break;
     };
     document.getElementById('textArea').innerText = text;

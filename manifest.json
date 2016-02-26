@@ -22,7 +22,6 @@
       "js/jquery-2.2.0.min.js",
       "js/tree.jquery.js",
       "js/marked.min.js",
-      "js/util.js",
       "js/export_lib.js",
       "js/content_script.js"
       ],

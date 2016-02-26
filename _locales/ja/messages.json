@@ -1,6 +1,6 @@
 {
   "Addtobookmark": {
-    "message": "表示しているトピックをブックマークへ追加する"
+    "message": "ブックマークへ追加する"
   },
   "Apply": {
     "message": "適用"
@@ -69,7 +69,7 @@
     "message": "狭い"
   },
   "Opennewwindow": {
-    "message": "表示しているトピックを新しいウィンドウで開く"
+    "message": "新しいウィンドウで開く"
   },
   "Option": {
     "message": "オプション"
@@ -78,7 +78,7 @@
     "message": "ノートを出力する"
   },
   "Outputtoc": {
-    "message": "目次を出力する(HTMLのみ)"
+    "message": "目次を出力する"
   },
   "Theme": {
     "message": "テーマ"

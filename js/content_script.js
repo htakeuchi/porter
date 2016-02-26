@@ -211,7 +211,7 @@
 
   function refreshTopicNavi() {
     var content = elementsToArray(document.querySelector('div.selected'));
-    var md = exportLib.toMarkdown(content, false, true);
+    var md = exportLib.toMarkdown(content, {outputHeadingLink: true});
     var headings = md.match(/^#+ .+?\n/mg);
 
     if (!headings || headings.length == 0) return;
@@ -221,7 +221,7 @@
       var level = headings[i].match(/^(#+)\s/)[0].length - 2;
       if (level <= 0 || level > 2) continue;
       headings[i].match(/\[([^\]]+?)]/);
-      var hd = headings[i].replace(/\[([^\]]+?)]/, '[' + Util.escapeHtml(RegExp.$1) + ']');
+      var hd = headings[i].replace(/\[([^\]]+?)]/, '[' + RegExp.$1 + ']');
       naviMd = naviMd + hd.replace(/^#+/, new Array(level).join('\t') + '*');
     }
     var html = marked(naviMd, { renderer: exportLib.getRenderer(true) });

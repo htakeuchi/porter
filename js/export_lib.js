@@ -24,49 +24,41 @@ var exportLib = (function () {
     return e;
   };
 
-//<h2 id="-https-workflowy-com-e006e364de95-"><a href="https://workflowy.com/#/e006e364de95">機能</a></h2>
-  toc2 = function(html) {
+  //## <a class="tocAnchor" name="1531a810d3622e"></a> Section Name
+  toc2 = function(markdown) {
     var tocString = '';
-    var headings = html.match(/<h[2-5].+?<\/h[2-5]/g);
-    if (!headings || headings.length == 0) return tocString;
-
-    for (var i=0; i<headings.length; i++) {
-      var level = headings[i].match(/<h(\d)/)[1] - 1;
-      var href = headings[i].match(/id="([^"]+?)"/)[1];
-//      var title = headings[i].match(/>([^<]+?)<\//)[1];
-      var title = headings[i].match(/href="[^"]+">([^<]+?)<\/a/)[1];
-      title = (!title || title.length == 0) ? "Heading(Empty)" : title;
-      tocString = tocString + new Array(level).join('\t') + '1. <a href="#' + href + '">' + Util.escapeHtml(title) + '</a>\n';
-    }
-    return '<div class="toc">' + marked(tocString) + '</div>';
-  };
-
-  //## <a class="tocAnchor" name="1531a810d3622e"> Section Name
-  toc = function(markdown) {
-    var tocString = '';
-console.log(markdown);
     var headings = markdown.match(/^#+.+?tocAnchor.+?$/mg);
-console.log(headings);
     if (!headings || headings.length == 0) return tocString;
 
     for (var i=0; i<headings.length; i++) {
       var level = headings[i].match(/^(#+)/)[1].length - 1;
       var href = headings[i].match(/name="([^"]+?)"/)[1];
-      var title = headings[i].match(/name=[^>]+>\s*(.*)$/)[1];
+      var title = headings[i].match(/<\/a>\s*(.*)$/)[1];
       title = (!title || title.length == 0) ? "Heading(Empty)" : title;
-      //tocString = tocString + new Array(level).join('\t') + '1. <a href="#' + href + '">' + Util.escapeHtml(title) + '</a>\n';
-      var line = new Array(level).join('\t') + '1. [' + Util.escapeHtml(title) + '](#' + href + ']\n';
+      var line = new Array(level).join('\t') + '1. [' + exportLib.escapeHtml(title) + '](#' + href + ')\n';
       tocString = tocString.concat(line);
     }
-console.log(tocString);
-    var tocMd = '<div class="toc">' + marked(tocString) + '</div>\n\n';
-console.log(tocMd);
-    return tocMd;
+    return tocString + '\n\n';
   };
 
   return {
     // public method
-    // avaial options -> nodes, {outputNotes: outputToc: outputHeadingLink}
+    // options -> {outputNotes: outputToc: outputHeadingLink}
+    headings: [],
+
+    // this.headings.push({title: nodes[i].title, level: level, uid: uid});
+    toc: function(markdown) {
+      var tocString = '';
+      for (var i=0; i < this.headings.length; i++) {
+        var title = this.escapeHtml(this.headings[i].title);
+        var level = this.headings[i].level;
+        var href = this.headings[i].uid;
+        var line = new Array(level).join('\t') + '1. [' + title + '](#' + href + ')\n';
+        tocString = tocString.concat(line);
+      }
+      return tocString;
+    },
+
     toMarkdown: function(nodes, option) {
       var text = "# " + nodes[0].title + "\n";
       var previous = null;
@@ -74,6 +66,8 @@ console.log(tocMd);
       var level = 2;
       var list_level = 0;
       var eoc = false;
+
+      this.headings = [];
 
       for (var i = 1; i < nodes.length; i++) {
         var lineBreak = "";
@@ -104,9 +98,11 @@ console.log(tocMd);
             if (element == "PARAGRAPH"){
               if (prevElement == "QUOTE" || prevElement == "LIST") indent = "\n";
 
-              var title = option.outputHeadingLink ? '[' + nodes[i].title + '](' + nodes[i].url + ')' : nodes[i].title;
-              var anchor = option.outputToc ? '<a class="tocAnchor" name="' + Util.getUniqueId() + '">' : '';
+              var title = option.outputHeadingLink ? '[' + exportLib.escapeHtml(nodes[i].title) + '](' + nodes[i].url + ')' : nodes[i].title;
+              var uid = exportLib.getUniqueId();
+              var anchor = option.outputToc ? '<a class="tocAnchor" name="' + uid + '"></a>' : '';
               var line = indent + new Array(level).join('#') + ' ' + anchor + title + "\n";
+              this.headings.push({title: nodes[i].title, level: level - 2, uid: uid});
 
               text =  text.concat(line);
               prevElement = "HEADING";
@@ -141,7 +137,8 @@ console.log(tocMd);
         prevElement = element;
         previous = nodes[i].type;
       }
-      return option.outputToc ? toc(text) + text : text;
+
+      return option.outputToc ? this.toc(text) + '\n' + text : text;
     },
 
     getRenderer: function(escape) {
@@ -151,9 +148,9 @@ console.log(tocMd);
           + level
           + ' id="'
 //          + raw.toLowerCase().replace(/[^\w]+/g, '-')
-          + escape ? Util.escapeHtml(text) :text
+          + escape ? this.escapeHtml(text) :text
           + '">'
-          + escape ? Util.escapeHtml(text) : text
+          + escape ? this.escapeHtml(text) : text
           + '</h'
           + level
           + '>\n';
@@ -161,16 +158,37 @@ console.log(tocMd);
       return renderer;
     },
 
-    toHtml: function(nodes, output_notes, output_toc, outputHeadingLink) {
+    escapeHtml: function(content) {
+      var TABLE_FOR_ESCAPE_HTML = {
+        "&": "&amp;",
+        "\"": "&quot;",
+        "<": "&lt;",
+        ">": "&gt;"
+      };
+      return content.replace(/[&"<>]/g, function(match) {
+        return TABLE_FOR_ESCAPE_HTML[match];
+      });
+    },
+
+    getUniqueId: function(myStrong) {
+      var strong = 1000;
+      if (myStrong) strong = myStrong;
+      return new Date().getTime().toString(16)  + Math.floor(strong*Math.random()).toString(16)
+    },
+
+    // options -> {outputNotes: outputToc: outputHeadingLink}
+    toHtml: function(nodes, option) {
       var renderer = this.getRenderer();
-      var md = this.toMarkdown(nodes, output_notes, outputHeadingLink);
+      var md = this.toMarkdown(nodes, option);
 //      var html = marked(md,{ renderer: renderer });
-      var html = marked(md);
-      return output_toc ? toc(html) + html : html;
+      var markedOption = option.marked ? option.marked : {};
+      var html = marked(md, markedOption);
+      return html;
     },
 
     toPreviewHTML: function(nodes) {
-      return this.toHtml(nodes, false, true, true);
+      var markedOption = {sanitize: true};
+      return this.toHtml(nodes, {outputHeadingLink: true, marked: markedOption});
     }
   };
 })();
