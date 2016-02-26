@@ -49,20 +49,6 @@
     return (format == "markdown") ? '[' + title + '](' + url + ')' : title + ' - ' + url;
   }
 
-  // not use
-  function preview() {
-    var img = '<img src="' + chrome.extension.getURL('image/space.gif') + '" width="800" height="1" alt="">';
-    var html = '<div id="content">' + img + exportLib.toHtml(g_output_toc) + '</div>';
-    //$('#contents').load(chrome.extension.getURL("css/theme/"+option.theme+".css");
-    $('body').html(html);
-
-    var link = document.createElement("link");
-    link.href = chrome.extension.getURL("css/preview/porter.css");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    document.getElementsByTagName("head")[0].appendChild(link);
-  }
-
   function main() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {request: 'getTopic'}, function(response) {
