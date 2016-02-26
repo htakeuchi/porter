@@ -10,6 +10,9 @@ The current version of Porter for WorkFlowy provides features below
 	* Exports WorkFlowy outline to Markdown and HTML.
 * Built-in Themes
 	* Customize WorkFlowy visual by built-in themes. change colors, or completely redesign the Workflowy by custom CSS.
+* Preview
+	* The topic can be beautifully preview by using a dedicated CSS.
+* Bookmark
 * Counts the number of characters in outline on real time.
 * Display page title and URL as Markdown format in Export dialog.
 
@@ -43,10 +46,10 @@ See LICENSE for more info.
 
 Release Notes
 --------
-### 1.4 - XX XXX 2016
-- Bug Fixes (share dialog not work)
+### 1.4 - 26 Feb 2016
 - Naviation bar (Bookmark bar integrated)
 - HTML Preview
+- Bug Fixes (share dialog not work)
 
 ### 1.3 - 21 Feb 2016
 - Bookmark bar (keyboard shortcut sidebar replace to Bookmark bar)
