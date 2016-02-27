@@ -46,13 +46,14 @@ See LICENSE for more info.
 
 Release Notes
 --------
-### 1.4.1 - 27 Feb 2016
+### 1.4.2 - 27 Feb 2016
 - Navigation bar switch
+- Bug Fix (enable FontAwesome to all themes)
 
 ### 1.4 - 26 Feb 2016
 - Naviation bar (Bookmark bar integrated)
 - HTML Preview
-- Bug Fixes (share dialog not work)
+- Bug Fix (share dialog not work)
 
 ### 1.3 - 21 Feb 2016
 - Bookmark bar (keyboard shortcut sidebar replace to Bookmark bar)

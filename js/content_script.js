@@ -43,6 +43,14 @@
     }
   }
 
+  function loadFontAwesome() {
+    var link = document.createElement("link");
+    link.href = chrome.extension.getURL("css/theme/font.css");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    document.getElementsByTagName("head")[0].appendChild(link);
+  }
+
   function injectCSS() {
     chrome.storage.sync.get(["theme_enable", "theme", "custom_css"], function (option) {
       if (!option.theme_enable) return;
@@ -55,6 +63,7 @@
         document.getElementsByTagName("head")[0].appendChild(link);
       }
       if (option.custom_css.length > 0) setCSS(option.custom_css);
+      loadFontAwesome();
     });
   }
 
