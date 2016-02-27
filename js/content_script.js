@@ -2,6 +2,7 @@
   var g_timerID;
   var g_textCountFlag;
   var g_CounterMsg = chrome.i18n.getMessage('Clicktocount');
+  var g_naviSwitch = true;
 
   function elementsToArray(node) {
     var list = [];
@@ -105,6 +106,30 @@
   function getRootNode() {
     var tree = $('#bookmark');
     return {"tree": tree, "node": tree.tree('getNodeById', 1)};
+  }
+
+  function addNaviSwitch() {
+    var styles = {
+      "font-size" : "13px",
+      "background-image" : $("#header").css("background-image"),
+      "background-color" : $("#header").css("background-color"),
+      float : "right"
+    };
+    styles["padding"] = "8px 18px 8px 0px";
+    $('<a></a>', {id: 'naviSwitch', class: 'naviSwitchOn'}).css(styles).appendTo($("#header"));
+
+    jQuery('#naviSwitch').click(function() {
+      if (g_naviSwitch) {
+        $('a#naviSwitch').removeClass('naviSwitchOn');
+        $('a#naviSwitch').addClass('naviSwitchOff');
+        $('#navigationBar').css("display", "none");
+      } else {
+        $('a#naviSwitch').removeClass('naviSwitchOff');
+        $('a#naviSwitch').addClass('naviSwitchOn');
+        $('#navigationBar').css("display", "block");
+      }
+      g_naviSwitch = !g_naviSwitch;
+    });
   }
 
   function addBookmark(url, title) {
@@ -248,6 +273,7 @@
        <div id="bookmark"></div>\
      </div>';
     $('body').append(navigationBar);
+    addNaviSwitch();
     setupBookmarkArea();
     setupTopicNavi();
   }

@@ -109,3 +109,20 @@
   content: "\f1f8";
   font-family: FontAwesome;
 }
+
+a#naviSwitch {
+  text-decoration:none;
+}
+a#naviSwitch:hober {
+  text-decoration:none;
+}
+a.naviSwitchOn:after {
+  content: "\f02e";
+  font-family: FontAwesome;
+  color: green;
+}
+a.naviSwitchOff:after {
+  content: "\f097";
+  font-family: FontAwesome;
+  color: green;
+}

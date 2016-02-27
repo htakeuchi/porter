@@ -46,6 +46,9 @@ See LICENSE for more info.
 
 Release Notes
 --------
+### 1.4.1 - 27 Feb 2016
+- Navigation bar switch
+
 ### 1.4 - 26 Feb 2016
 - Naviation bar (Bookmark bar integrated)
 - HTML Preview
