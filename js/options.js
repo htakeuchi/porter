@@ -27,6 +27,9 @@
     {'label': 'Big Black Workflowy by rsynnest',
       'filename': 'big-black-workflowy'
     },
+    {'label': 'Suikou by akio6o6',
+      'filename': 'suikou'
+    },
     {'label': 'Custom CSS Only (unused built-in theme)',
       'filename': 'CUSTOM'
     },

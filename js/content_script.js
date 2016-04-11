@@ -53,6 +53,7 @@
 
   function injectCSS() {
     chrome.storage.sync.get(["theme_enable", "theme", "custom_css"], function (option) {
+      loadFontAwesome();
       if (!option.theme_enable) return;
 
       if (option.theme != "CUSTOM") {
@@ -63,7 +64,6 @@
         document.getElementsByTagName("head")[0].appendChild(link);
       }
       if (option.custom_css.length > 0) setCSS(option.custom_css);
-      loadFontAwesome();
     });
   }
 

@@ -46,6 +46,10 @@ See LICENSE for more info.
 
 Release Notes
 --------
+### 1.4.3 - 11 Apr 2016
+- Add a new theme (suikou)
+- Bug Fix (enable FontAwesome on theme disabled)
+
 ### 1.4.2 - 27 Feb 2016
 - Navigation bar switch
 - Bug Fix (enable FontAwesome to all themes)
